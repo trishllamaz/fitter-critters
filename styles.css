@@ -1,23 +1,17 @@
-<head>
-</head>
-<body>
-
 
 /* CSS for Navigation bar on all pages */
-  .topnav {
-    overflow: hidden;
-    background-color: #f4d3f5;
-  }
-  .topnav a {
-    float: right;
-    color: black;
-    padding: 20px;
-  }
-  .topnav a:hover {
-    background-color: #cd9bcf
-  }
-  .topnav a.active {
-    background-color: #b97ccc;
-  }
-
-</body>
+.topnav {
+  overflow: hidden;
+  background-color: #f4d3f5;
+}
+.topnav a {
+  float: right;
+  color: black;
+  padding: 20px;
+}
+.topnav a:hover {
+  background-color: #cd9bcf
+}
+.topnav a.active {
+  background-color: #b97ccc;
+}
