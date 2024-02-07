@@ -9,4 +9,32 @@
   <a href=index.html> Back Home </a>
   <input type="text" placeholder="Search Tags...">
 </div>
+
+<div id="closetfilter">
+  <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+  <button class="btn" onclick="filterSelection('shirts')"> Shirts</button>
+  <button class="btn" onclick="filterSelection('jackets')"> Jackets</button>
+  <button class="btn" onclick="filterSelection('pants')"> Pants</button>
+  <button class="btn" onclick="filterSelection('shoes')"> Shoes</button>
+  <button class="btn" onclick="filterSelection('neutral')"> Neutral</button>
+  <button class="btn" onclick="filterSelection('colorful')"> Colorful</button>
+  <button class="btn" onclick="filterSelection('denim')"> Denim</but>
+</div>
+
+<!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
+<div class="container">
+  <div class="filterDiv shirts colorful">image</div>
+  <div class="filterDiv shirts neutral">image</div>
+  <div class="filterDiv pants denim">image</div>
+</div>
+
+
+
+
+
+
+
+
+
+
 </body>
