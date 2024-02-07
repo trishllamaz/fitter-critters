@@ -310,3 +310,11 @@ a {
   background-color: #666;
   color: white;
 }
+/* Creates display boxes for images and checkboxes */
+.display {
+  width: 270px;
+  height: 250px;
+  padding: 10px;
+  border: 5px solid #FFB3C6;
+  margin: 10px;
+}
