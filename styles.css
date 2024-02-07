@@ -8,6 +8,9 @@
   float: right;
   color: black;
   padding: 20px;
+  background: #f4d3f5;
+  border-radius: 40%;
+  text-decoration: none;
 }
 .topnav a:hover {
   background-color: #cd9bcf
