@@ -258,7 +258,7 @@ a {
   .topnav a, .topnav input[type=text] {
     float: none;
     display: block;
-    text-align: left;
+    text-align: center;
     width: 100%;
     margin: 0;
     padding: 14px;
@@ -303,6 +303,7 @@ a {
 /* Add a light grey background on mouse-over */
 .btn:hover {
   background-color: #ddd;
+  box-shadow: None;
 }
 
 /* Add a dark background to the active button */
@@ -312,7 +313,7 @@ a {
 }
 /* Creates display boxes for images and checkboxes */
 .display {
-  width: 270px;
+  width: 250px;
   height: 250px;
   padding: 10px;
   border: 5px solid #FFB3C6;
