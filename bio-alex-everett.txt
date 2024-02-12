@@ -1,0 +1,5 @@
+My name is Alex Everett and currently I am a freshman at Drexel University. 
+My major is Software Engineering and my previous experience include 3 high
+school classes involving Python, JavaScript, and Java. I am the most 
+proficient with Python and I have been learning CSS and HTML in my 
+Computing Informatics classes.
