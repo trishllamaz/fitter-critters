@@ -18,7 +18,7 @@
   <button class="btn" onclick="filterSelection('shoes')"> Shoes</button>
   <button class="btn" onclick="filterSelection('neutral')"> Neutral</button>
   <button class="btn" onclick="filterSelection('colorful')"> Colorful</button>
-  <button class="btn" onclick="filterSelection('denim')"> Denim</but>
+  <button class="btn" onclick="filterSelection('denim')"> Denim</button>
 </div>
 
 <!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
@@ -30,14 +30,14 @@
 
 <div class="display">
   <input type="checkbox" id="item" name="pick" value="heels">
-  <image src="https://www.cs.drexel.edu/~kbs75/heels.png" width="250" height="200">
+  <image id= "preview" width="250" height="200">
   <p> Tags: </p>
 </div>
 
 <form>
 	<label for="file-input">Select an image:</label>
 	<input type="file" id="file-input" accept="image/*">
-<img id = "preview">
 <script src="script.js"></script>
+</form>
 
 </body>
