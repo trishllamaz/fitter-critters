@@ -25,49 +25,73 @@
 </div>
 
 <!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
-<div class="container">
+<div class="filter-container">
   <div class="filterDiv shirts colorful">image</div>
   <div class="filterDiv shirts neutral">image</div>
   <div class="filterDiv pants denim">image</div>
 </div>
+<div class="container">
+  <div class="content">
+    <div class="closet-wrapper">
+      <div class="leftContent">
+        <div class="display">
+          <div class="left">
+            <input type="checkbox">
+            <image id= "preview" width="200" height="160">
+            <p> Tags: </p>
+          </div>
+        </div>
+        <div class="display">
+          <div class="center">
+            <input type="checkbox">
+            <image id= "preview" width="200" height="160">
+            <p> Tags: </p>
+          </div>
+        </div>
+        <div class="display">
+          <div class="right">
+            <input type="checkbox">
+            <image id= "preview" width="200" height="160">
+            <p> Tags: </p>
+          </div>
+        </div>
+      </div>
+      <div class="rightContent">
+        <p>Your Selected Outfit</p>
+      </div>
+    </div>
+    <footer>
+      <input type="file" id="file-input" accept="image/*">
+      <img id="image-container" />
+      <script type="text/javascript">
+      (function(){
+            /** @type {Node} */
+        var imgInput = document.getElementById( "image-input" ),
+            /** @type {Node} */
+            imgContainer = document.getElementById( "image-container" ),
+            /** Restore image src from local storage */
+            updateUi = function() {
+              imgContainer.src = window.localStorage.getItem( "image-base64" );
+            },
+            /** Register event listeners */
+            bindUi = function(){
+              imgInput.addEventListener( "change", function(){
+                if ( this.files.length ) {
+                  var reader = new FileReader();
+                  reader.onload = function( e ){
+                    window.localStorage.setItem( "image-base64", e.target.result );
+                    updateUi();
+                  };
+                  reader.readAsDataURL( this.files[ 0 ] );
+                }
+              }, false );
+            };
 
-<div class="display">
-  <input type="checkbox" id="item" name="pick" value="heels">
-  <image id= "preview" width="250" height="200">
-  <p> Tags: </p>
+      updateUi();
+      bindUi();
+      }());
+      </script>
+    </footer>
+  </div>
 </div>
-
-    <input type="file" id="file-input" accept="image/*">
-    <img id="image-container" />
-    <script type="text/javascript">
-    (function(){
-          /** @type {Node} */
-      var imgInput = document.getElementById( "image-input" ),
-          /** @type {Node} */
-          imgContainer = document.getElementById( "image-container" ),
-          /** Restore image src from local storage */
-          updateUi = function() {
-            imgContainer.src = window.localStorage.getItem( "image-base64" );
-          },
-          /** Register event listeners */
-          bindUi = function(){
-            imgInput.addEventListener( "change", function(){
-              if ( this.files.length ) {
-                var reader = new FileReader();
-                reader.onload = function( e ){
-                  window.localStorage.setItem( "image-base64", e.target.result );
-                  updateUi();
-                };
-                reader.readAsDataURL( this.files[ 0 ] );
-              }
-            }, false );
-          };
-
-    updateUi();
-    bindUi();
-    }());
-    </script>
-
-
-
 </body>

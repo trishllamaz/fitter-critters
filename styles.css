@@ -277,7 +277,7 @@ a {
 
 /* Trish: added filter/tag css */
 
-.container {
+.filter-container {
   overflow: hidden;
 }
 
@@ -332,7 +332,7 @@ a {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: #FFB3C6;
+    background: #FFB3C6; 
     background: radial-gradient(circle, #fb6f92 35%, #ff8fab, 100%);
 }
 .upload-wrapper{
@@ -394,4 +394,75 @@ a {
 }
 .visually-hidden{
     display: none;
+}
+
+/* Set styles for the closet page */
+.container {
+    min-height: 100%;
+    flex: 1 1 auto;
+}
+.container:before {
+    content: '';
+    height: 100%;
+    float: left;
+}
+.content {
+    position: relative;
+    z-index: 1; 
+} 
+.content:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+.checkbox {
+    float: left;
+    margin: 5px;
+}
+
+/* Gallery for display boxes */
+.left {
+    padding: 10px;
+    float: left;
+    width: 33%;
+}
+.center {
+    padding: 10px;
+    float: left;
+    width: 33%;
+}
+.right {
+    padding: 10px;
+    float: left;
+    width: 33%;
+}
+
+/* Left side of screen */
+.leftContent {
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 70%;
+    max-height: 100vh;
+}
+/* Right side of screen */
+.rightContent {
+    margin-left: 10px;
+    text-align: center;
+    height: 100vh;
+}
+footer {
+    text-align: 10px;
+    background-color: white;
+    margin-top: auto;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+}
+.closet-wrapper{
+    display: flex;
+    height: 100vh;
 }
