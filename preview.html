@@ -14,7 +14,20 @@
                 	
 	    <div>
                 <input type = "file" class = "visually-hidden" id = "upload-input">
-                <button type = "button" class = "upload-btn">Choose Image</button>
+                <button type = "button" class = "upload-btn" onchange="handleImageUpload()">Choose Image</button>
+                <div id="dropdown-container">
+                  <label for="dropdown">Select your Tag:</label>
+                  <select id="dropdown">
+                    <option value="blank">None</option>
+                    <option value="optionShirt">Shirts</option>
+                    <option value="optionJacket">Jackets</option>
+                    <option value="optionPants">Pants</option>
+                    <option value="optionShoes">Shoes</option>
+                    <option value="optionNeutral">Neutral</option>
+                    <option value="optionColorful">Colorful</option>
+                    <option value="optionDenim">Denim</option>
+                  </select>
+                </div>
             </div>
         </form>
     </div>
@@ -24,11 +37,13 @@
     <input type="file" id="file-input" accept="image/*">
     <img id="image-container" />
     <script type="text/javascript">
-    (function(){
+    (function handleImageUpload(){
           /** @type {Node} */
-      var imgInput = document.getElementById( "image-input" ),
+      var imgInput = document.getElementById( "image-input" )
+      var dropdownContainer = document.getElementById("dropdown-container")
           /** @type {Node} */
           imgContainer = document.getElementById( "image-container" ),
+
           /** Restore image src from local storage */
           updateUi = function() {
             imgContainer.src = window.localStorage.getItem( "image-base64" );
@@ -41,6 +56,7 @@
                 reader.onload = function( e ){
                   window.localStorage.setItem( "image-base64", e.target.result );
                   updateUi();
+                  dropdownContainer.style.display = 'block';
                 };
                 reader.readAsDataURL( this.files[ 0 ] );
               }
