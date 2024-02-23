@@ -485,3 +485,8 @@ svg {
     text-align: center;
     font-size: 20px;
 }
+
+.preview {
+    width: 200px;
+    height: 160px;
+}

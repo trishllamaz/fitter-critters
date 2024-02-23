@@ -9,4 +9,3 @@ input.addEventListener("change", () => {
 	reader.readAsDataURL(input.files[0]);
 });
 
-
