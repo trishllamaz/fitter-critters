@@ -43,6 +43,13 @@
             <p> Tags: </p>
           </div>
         </div>
+        <div class="display">
+          <div class="center">
+            <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/heels.png">
+            <img src="https://www.cs.drexel.edu/~kbs75/heels.png" width="200px" height="160px">
+            <p> Tags: </p>
+          </div>
+        </div>
       </div>
       <div class="rightContent">
         <p>Your Selected Outfit</p>
@@ -55,16 +62,31 @@
   </div>
 </div>
 <script>
-  $(document).ready(function () {
-    $('.checkbox').change(function () {
-      if ($(this).is(':checked')) {
-        var imgSrc = $(this).data('img-src');
-        var selectedImage = '<img src="' + imgSrc + '" width="200px" height="160px">';
-        $('#selectedImageContainer').html(selectedImage);
-      } else {
-        $('#selectedImageContainer').html('');
-      }
-    });
-  });
+var selectedImages = [];
+
+$('.checkbox').change(function () {
+  var imgSrc = $(this).data('img-src');
+
+  // Add image to array and remove when unclicked
+  if ($(this).is(':checked')) {
+    selectedImages.push(imgSrc);
+  } else {
+    var index = selectedImages.indexOf(imgSrc);
+    if (index !== -1) {
+      selectedImages.splice(index, 1);
+    }
+  }
+  updateSelectedImages();
+});
+
+function updateSelectedImages() {
+  var selectedImagesHtml = '';
+
+  for (var i = 0; i < selectedImages.length; i++) {
+    selectedImagesHtml += '<img src="' + selectedImages[i] + '" style="margin-right: 10px;" width="200px" height="160px">';
+  }
+
+  $('#selectedImageContainer').html(selectedImagesHtml);
+}
 </script>
 </body>
