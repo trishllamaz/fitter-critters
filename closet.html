@@ -53,7 +53,9 @@
       </div>
       <div class="rightContent">
         <p>Your Selected Outfit</p>
-        <div id="selectedImageContainer"></div>
+        <div id="selectedImageContainer">
+          
+        </div>
       </div>
     </div>
     <footer>
@@ -88,5 +90,36 @@ function updateSelectedImages() {
 
   $('#selectedImageContainer').html(selectedImagesHtml);
 }
+</script>
+
+<div class="wrapper">
+  <div class="upload-container">
+      <div class="upload-img" id="image-gallery">
+          <!-- Images will be appended here -->
+      </div>
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+      var gallery = document.getElementById('image-gallery');
+
+      // This loops through localStorage to find uploaded images
+      for (var i = 0; i < localStorage.length; i++) {
+          var key = localStorage.key(i);
+          
+          // This checks if the key represents an uploaded image
+          if (key.startsWith('uploadedImage')) {
+              var imageData = localStorage.getItem(key);
+              
+              // This creates an image element and set its source
+              var img = document.createElement('img');
+              img.src = imageData;
+              
+              // Append the image to the gallery container (have to edit this bc array needs to work)
+              gallery.appendChild(img);
+          }
+      }
+  };
 </script>
 </body>
