@@ -38,15 +38,15 @@
       <div class="leftContent">
         <div class="display">
           <div class="left">
-            <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/sanrio.png">
-            <img src="https://www.cs.drexel.edu/~kbs75/sanrio.png" width="200px" height="160px">
+            <input type="checkbox" class="checkbox" data-img-src="">
+            <img src="" width="200px" height="160px">
             <p> Tags: </p>
           </div>
         </div>
         <div class="display">
           <div class="center">
-            <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/heels.png">
-            <img src="https://www.cs.drexel.edu/~kbs75/heels.png" width="200px" height="160px">
+            <input type="checkbox" class="checkbox" data-img-src="">
+            <img src="" width="200px" height="160px">
             <p> Tags: </p>
           </div>
         </div>
@@ -69,7 +69,6 @@ var selectedImages = [];
 $('.checkbox').change(function () {
   var imgSrc = $(this).data('img-src');
 
-  // Add image to array and remove when unclicked
   if ($(this).is(':checked')) {
     selectedImages.push(imgSrc);
   } else {
@@ -95,31 +94,34 @@ function updateSelectedImages() {
 <div class="wrapper">
   <div class="upload-container">
       <div class="upload-img" id="image-gallery">
-          <!-- Images will be appended here -->
+
       </div>
   </div>
 </div>
 
 <script>
-  window.onload = function() {
-      var gallery = document.getElementById('image-gallery');
+window.onload = function() {
 
-      // This loops through localStorage to find uploaded images
-      for (var i = 0; i < localStorage.length; i++) {
-          var key = localStorage.key(i);
-          
-          // This checks if the key represents an uploaded image
-          if (key.startsWith('uploadedImage')) {
-              var imageData = localStorage.getItem(key);
-              
-              // This creates an image element and set its source
-              var img = document.createElement('img');
-              img.src = imageData;
-              
-              // Append the image to the gallery container (have to edit this bc array needs to work)
-              gallery.appendChild(img);
-          }
-      }
-  };
+    $('.display').each(function() {
+        var displayDiv = $(this);
+
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            
+            if (key.startsWith('uploadedImage')) {
+                var imageData = localStorage.getItem(key);
+                
+                var imgSrc = imageData;
+
+                var imgElement = displayDiv.find("img");
+                
+                imgElement.attr("src", imgSrc);
+
+                imgElement.attr("data-img-src", imgSrc);
+            }
+        }
+    });
+};
+
 </script>
 </body>
