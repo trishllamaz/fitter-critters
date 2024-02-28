@@ -89,6 +89,8 @@ function updateSelectedImages() {
 
   $('#selectedImageContainer').html(selectedImagesHtml);
 }
+
+
 </script>
 
 <div class="wrapper">
@@ -100,28 +102,45 @@ function updateSelectedImages() {
 </div>
 
 <script>
+// Track selected images
+var selectedImages = [];
+
+// Handle checkbox change event
+$('.checkbox').change(function () {
+  var imgSrc = $(this).siblings('img').attr('src');
+
+  if ($(this).is(':checked')) {
+    selectedImages.push(imgSrc);
+  } else {
+    var index = selectedImages.indexOf(imgSrc);
+    if (index !== -1) {
+      selectedImages.splice(index, 1);
+    }
+  }
+  updateSelectedImages();
+});
+
+// On window load, load images from localStorage
 window.onload = function() {
+  $('.display').each(function() {
+    var displayDiv = $(this);
 
-    $('.display').each(function() {
-        var displayDiv = $(this);
+    for (var i = 0; i < localStorage.length; i++) {
+      var key = localStorage.key(i);
 
-        for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-            
-            if (key.startsWith('uploadedImage')) {
-                var imageData = localStorage.getItem(key);
-                
-                var imgSrc = imageData;
+      if (key.startsWith('uploadedImage')) {
+        var imageData = localStorage.getItem(key);
+        var imgSrc = imageData;
 
-                var imgElement = displayDiv.find("img");
-                
-                imgElement.attr("src", imgSrc);
+        var imgElement = displayDiv.find("img");
 
-                imgElement.attr("data-img-src", imgSrc);
-            }
-        }
-    });
+        imgElement.attr("src", imgSrc);
+        imgElement.attr("data-img-src", imgSrc);
+      }
+    }
+  });
 };
+
 
 </script>
 </body>
