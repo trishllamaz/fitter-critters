@@ -31,6 +31,7 @@
                     <option value="optionDenim">Denim</option>
                 </select>
             </div>
+            <input type="button" value="Submit" onclick="saveTags()">
         </div>
     </form>
 </div>
@@ -43,6 +44,14 @@
             document.getElementById('preview-image').src = imageData;
         }
     };
+    function saveTags() {
+        var selectedTag = document.getElementById("dropdown").value;
+        var tagList = localStorage.getItem("tagList") ? JSON.parse(localStorage.getItem("tagList")): [];
+        tagList.push(selectedTag);
+        localStorage.setItem("tagList", JSON.stringify(tagList));
+        window.location.href = "closet.html";
+    }
+
 
     // This is the function to handle image upload
     function handleImageUpload(event) {
