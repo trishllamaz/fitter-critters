@@ -40,14 +40,14 @@
           <div class="left">
             <input type="checkbox" class="checkbox" data-img-src="">
             <img src="" width="200px" height="160px">
-            <p> Tags: </p>
+            <p> Tag: <span id="displayTags" style="display: inline;"></span></p>
           </div>
         </div>
         <div class="display">
           <div class="center">
             <input type="checkbox" class="checkbox" data-img-src="">
             <img src="" width="200px" height="160px">
-            <p> Tags: </p>
+            <p> Tag: </p>
           </div>
         </div>
       </div>
@@ -90,6 +90,16 @@ function updateSelectedImages() {
   $('#selectedImageContainer').html(selectedImagesHtml);
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+  const tagList = localStorage.getItem('tagList');
+
+  if (tagList) {
+    const tags = JSON.parse(tagList);
+    const lastTag = tags[tags.length - 1]
+    //const tags = JSON.parse(tagList).join(', '); <--- for multiple tags on one item
+    document.getElementById('displayTags').textContent = lastTag;
+  }
+})
 
 </script>
 
@@ -102,6 +112,9 @@ function updateSelectedImages() {
 </div>
 
 <script>
+/*
+This script is already used to move items on the other side of screen. Having it twice causes problems.
+
 // Track selected images
 var selectedImages = [];
 
@@ -119,7 +132,7 @@ $('.checkbox').change(function () {
   }
   updateSelectedImages();
 });
-
+*/
 // On window load, load images from localStorage
 window.onload = function() {
   $('.display').each(function() {
@@ -137,10 +150,10 @@ window.onload = function() {
         imgElement.attr("src", imgSrc);
         imgElement.attr("data-img-src", imgSrc);
       }
+      document.getElementbyId("left")
     }
   });
 };
-
 
 </script>
 </body>
