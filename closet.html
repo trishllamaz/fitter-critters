@@ -68,7 +68,6 @@ var selectedImages = [];
 
 $('.checkbox').change(function () {
   var imgSrc = $(this).data('img-src');
-
   if ($(this).is(':checked')) {
     selectedImages.push(imgSrc);
   } else {
@@ -82,11 +81,9 @@ $('.checkbox').change(function () {
 
 function updateSelectedImages() {
   var selectedImagesHtml = '';
-
   for (var i = 0; i < selectedImages.length; i++) {
     selectedImagesHtml += '<img src="' + selectedImages[i] + '" style="margin-right: 10px;" width="200px" height="160px">';
   }
-
   $('#selectedImageContainer').html(selectedImagesHtml);
 }
 
@@ -118,10 +115,8 @@ This script is already used to move items on the other side of screen. Having it
 // Track selected images
 var selectedImages = [];
 
-// Handle checkbox change event
 $('.checkbox').change(function () {
   var imgSrc = $(this).siblings('img').attr('src');
-
   if ($(this).is(':checked')) {
     selectedImages.push(imgSrc);
   } else {
@@ -137,16 +132,12 @@ $('.checkbox').change(function () {
 window.onload = function() {
   $('.display').each(function() {
     var displayDiv = $(this);
-
     for (var i = 0; i < localStorage.length; i++) {
       var key = localStorage.key(i);
-
       if (key.startsWith('uploadedImage')) {
         var imageData = localStorage.getItem(key);
         var imgSrc = imageData;
-
         var imgElement = displayDiv.find("img");
-
         imgElement.attr("src", imgSrc);
         imgElement.attr("data-img-src", imgSrc);
       }
