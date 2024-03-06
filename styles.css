@@ -490,3 +490,32 @@ svg {
     width: 200px;
     height: 160px;
 }
+
+.signup-box{
+    display:flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 800px;
+}
+
+.left-box{
+    padding: 50px;
+    flex-basis:50%;
+    flex-grow: 1;
+}
+
+.right-box{
+    padding: 50px;
+    flex-basis:50%;
+    flex-grow: 1;
+}
+
+.input-box{
+    width: 100;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px;
+    outline: none;
+    background:transparent;
+}
