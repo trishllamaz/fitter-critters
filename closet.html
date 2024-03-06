@@ -15,6 +15,31 @@
   <input class="search2" id="txtSearch" type="text" name="search_bar" size="30" maxlength="255"
   value="" style="left: 300px; top: 153px; width: 293px; height: 26px;" />
 </div>
+
+<script>
+
+const search = () => {
+        const searchbox = document.getElementById("txtSearch").value.toUpperCase();
+        const storeitems = document.getElementById("product-list")
+        const product = document.querySelectorAll(".product")
+        const pname = storeitems.getElementByTagName("p")
+
+        for(var i=0; i < pname.length; i++){
+                let match = product[i].getElementByTagName("p")[0];
+
+                if (match) {
+                        let textValue = match.textContent || match.innerHTML
+
+                        if (textValue.toUpperCase().indexOf(searchBox) > -1) {
+                                product[i].style.display = "";
+                        } else {
+                                product[i].style.display = "none";
+                        }
+                }
+        }
+}
+
+</script>
 <div id="closetfilter">
   <button class="btn active" onclick="filterSelection('all')"> Show all</button>
   <button class="btn" onclick="filterSelection('shirts')"> Shirts</button>
@@ -32,32 +57,33 @@
   <div class="filterDiv shirts neutral">image</div>
   <div class="filterDiv pants denim">image</div>
 </div>
-<div class="container">
+<div class="container product-list" id="product-list" >
   <div class="content">
     <div class="closet-wrapper">
       <div class="leftContent">
-        <div class="display">
+        <div class="display product">
           <div class="left">
-            <input type="checkbox" class="checkbox" data-img-src="">
-            <img src="" width="200px" height="160px">
-            <p> Tag: <span id="displayTags" style="display: inline;"></span></p>
+            <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/sanrio.png">
+            <img src="https://www.cs.drexel.edu/~kbs75/sanrio.png" width="200px" height="160px">
+            <p> Tags: </p>
           </div>
         </div>
-        <div class="display">
+        <div class="display product">
           <div class="center">
-            <input type="checkbox" class="checkbox" data-img-src="">
-            <img src="" width="200px" height="160px">
-            <p> Tag: </p>
+            <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/heels.png">
+            <img src="https://www.cs.drexel.edu/~kbs75/heels.png" width="200px" height="160px">
+            <p> Tags: </p>
           </div>
         </div>
       </div>
       <div class="rightContent">
         <p>Your Selected Outfit</p>
         <div id="selectedImageContainer">
-          
+
         </div>
       </div>
     </div>
+
     <footer>
 
     </footer>
