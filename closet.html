@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<html>
 <head>
   <link href="styles.css" rel="stylesheet" type="text/css" />
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src = "script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
 </head>
 <body>
 <div class="topnav">
@@ -10,39 +11,13 @@
   <a class="active" href=closet.html> Your Closet </a>
   <a href=index.html> Back Home </a>
   <a href=social.html> Public Outfits </a>
-<!-- This is the search bar updated -->
-  <form id="frmSearch" class="search2" method="get" action="index.html" >
-  <input class="search2" id="txtSearch" type="text" name="search_bar" size="30" maxlength="255"
-  value="" style="left: 300px; top: 153px; width: 293px; height: 26px;" />
+  <!-- This is the search bar updated -->
+  <form id="frmSearch" class="search2" method="get">
+    <input class="search2" id="txtSearch" type="text" name="search_bar" size="30" maxlength="255"
+           value="" style="left: 300px; top: 153px; width: 293px; height: 26px;" />
+  </form>
 </div>
 
-<script>
-
-const search = () => {
-        const searchbox = document.getElementById("txtSearch").value.toUpperCase();
-        const storeitems = document.getElementById("product-list")
-        const product = document.querySelectorAll(".product")
-        const pname = storeitems.getElementsByTagName("p")
-
-        for(var i=0; i < pname.length; i++){
-                let match = product[i].getElementsByTagName("p")[0];
-
-                if (match) {
-                        let textValue = match.textContent || match.innerHTML
-
-                        if (textValue.toUpperCase().indexOf(searchbox) > -1) {
-                                product[i].style.display = "";
-                        } else {
-                                product[i].style.display = "none";
-                        }
-                }
-        }
-}
-document.getElementById("frmSearch").addEventListener("submit", (event) => {
-    event.preventDefault();
-    search();
-  });
-</script>
 <div id="closetfilter">
   <button class="btn active" onclick="filterSelection('all')"> Show all</button>
   <button class="btn" onclick="filterSelection('shirts')"> Shirts</button>
@@ -54,13 +29,13 @@ document.getElementById("frmSearch").addEventListener("submit", (event) => {
   <button class="btn" onclick="filterSelection('denim')"> Denim</button>
 </div>
 
-<!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
 <div class="filter-container">
   <div class="filterDiv shirts colorful">image</div>
   <div class="filterDiv shirts neutral">image</div>
   <div class="filterDiv pants denim">image</div>
 </div>
-<div class="container product-list" id="product-list" >
+
+<div class="container" id="product-list">
   <div class="content">
     <div class="closet-wrapper">
       <div class="leftContent">
@@ -68,7 +43,7 @@ document.getElementById("frmSearch").addEventListener("submit", (event) => {
           <div class="left">
             <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/sanrio.png">
             <img src="https://www.cs.drexel.edu/~kbs75/sanrio.png" width="200px" height="160px">
-            <p> Tags: </p>
+            <p> </p>
           </div>
         </div>
         <div class="display product">
@@ -81,66 +56,20 @@ document.getElementById("frmSearch").addEventListener("submit", (event) => {
       </div>
       <div class="rightContent">
         <p>Your Selected Outfit</p>
-        <div id="selectedImageContainer">
-
-        </div>
+        <div id="selectedImageContainer"></div>
       </div>
     </div>
-
-    <footer>
-
-    </footer>
+    <footer></footer>
   </div>
 </div>
-<script>
-var selectedImages = [];
-
-$('.checkbox').change(function () {
-  var imgSrc = $(this).data('img-src');
-  if ($(this).is(':checked')) {
-    selectedImages.push(imgSrc);
-  } else {
-    var index = selectedImages.indexOf(imgSrc);
-    if (index !== -1) {
-      selectedImages.splice(index, 1);
-    }
-  }
-  updateSelectedImages();
-});
-
-function updateSelectedImages() {
-  var selectedImagesHtml = '';
-  for (var i = 0; i < selectedImages.length; i++) {
-    selectedImagesHtml += '<img src="' + selectedImages[i] + '" style="margin-right: 10px;" width="200px" height="160px">';
-  }
-  $('#selectedImageContainer').html(selectedImagesHtml);
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  const tagList = localStorage.getItem('tagList');
-
-  if (tagList) {
-    const tags = JSON.parse(tagList);
-    const lastTag = tags[tags.length - 1]
-    //const tags = JSON.parse(tagList).join(', '); <--- for multiple tags on one item
-    document.getElementById('displayTags').textContent = lastTag;
-  }
-})
-
-</script>
 
 <div class="wrapper">
   <div class="upload-container">
-      <div class="upload-img" id="image-gallery">
-
-      </div>
+    <div class="upload-img" id="image-gallery"></div>
   </div>
 </div>
 
 <script>
-
-//This script is already used to move items on the other side of screen. Having it twice causes problems.
-
 // Track selected images
 var selectedImages = [];
 
@@ -170,10 +99,42 @@ window.onload = function() {
         imgElement.attr("src", imgSrc);
         imgElement.attr("data-img-src", imgSrc);
       }
-      document.getElementbyId("left")
     }
   });
 };
 
+function updateSelectedImages() {
+  var selectedImagesHtml = '';
+  for (var i = 0; i < selectedImages.length; i++) {
+    selectedImagesHtml += '<img src="' + selectedImages[i] + '" style="margin-right: 10px;" width="200px" height="160px">';
+  }
+  $('#selectedImageContainer').html(selectedImagesHtml);
+}
+
+// This is the updated searchbar code
+  const search = () => {
+  const searchbox = document.getElementById("txtSearch").value.toUpperCase();
+  const product = document.querySelectorAll(".product");
+
+  for (var i = 0; i < product.length; i++) {
+    let match = product[i].getElementsByTagName("p")[0];
+
+    if (match) {
+      let textValue = match.textContent || match.innerHTML;
+
+      if (textValue.toUpperCase().indexOf(searchbox) > -1) {
+        product[i].style.display = "";
+      } else {
+        product[i].style.display = "none";
+      }
+    }
+  }
+};
+
+document.getElementById("frmSearch").addEventListener("input", (event) => {
+  event.preventDefault();
+  search();
+});
 </script>
 </body>
+</html>
