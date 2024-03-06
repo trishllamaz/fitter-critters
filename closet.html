@@ -11,7 +11,7 @@
   <a href=index.html> Back Home </a>
   <a href=social.html> Public Outfits </a>
 <!-- This is the search bar updated -->
-  <form id="frmSearch" class="search2" method="get" action="index.html" />
+  <form id="frmSearch" class="search2" method="get" action="index.html" >
   <input class="search2" id="txtSearch" type="text" name="search_bar" size="30" maxlength="255"
   value="" style="left: 300px; top: 153px; width: 293px; height: 26px;" />
 </div>
@@ -22,10 +22,10 @@ const search = () => {
         const searchbox = document.getElementById("txtSearch").value.toUpperCase();
         const storeitems = document.getElementById("product-list")
         const product = document.querySelectorAll(".product")
-        const pname = storeitems.getElementByTagName("p")
+        const pname = storeitems.getElementsByTagName("p")
 
         for(var i=0; i < pname.length; i++){
-                let match = product[i].getElementByTagName("p")[0];
+                let match = product[i].getElementsByTagName("p")[0];
 
                 if (match) {
                         let textValue = match.textContent || match.innerHTML
