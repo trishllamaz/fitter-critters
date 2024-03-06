@@ -38,7 +38,10 @@ const search = () => {
                 }
         }
 }
-
+document.getElementById("frmSearch").addEventListener("submit", (event) => {
+    event.preventDefault();
+    search();
+  });
 </script>
 <div id="closetfilter">
   <button class="btn active" onclick="filterSelection('all')"> Show all</button>
