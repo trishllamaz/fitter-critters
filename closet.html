@@ -37,19 +37,25 @@
 
 <div class="container" id="product-list">
   <div class="content">
+    <div id="hiddenMessage" style="text-align: center;">
+      <p style="margin-top: 10%;">No images to display. </p>
+      <p> Please press the "Upload Clothes" button to continue creating your online closet</p>
+    </div>
     <div class="closet-wrapper">
       <div class="leftContent">
-        <div class="display product">
-          <div class="left">
-            <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/sanrio.png">
-            <img src="https://www.cs.drexel.edu/~kbs75/sanrio.png" width="200px" height="160px">
-            <p> </p>
+        <div class="left">
+          <div class="display product">
+            <input type="checkbox" class="checkbox" data-img-src="">
+            <img src="" width="200px" height="160px" style="margin-left: 10px">
+            <div>
+              <p> Tags: <span id="displayTags" style="display: inline;"></span> </p>
+            </div>
           </div>
         </div>
-        <div class="display product">
-          <div class="center">
-            <input type="checkbox" class="checkbox" data-img-src="https://www.cs.drexel.edu/~kbs75/heels.png">
-            <img src="https://www.cs.drexel.edu/~kbs75/heels.png" width="200px" height="160px">
+        <div class="center">
+          <div class="display product">
+            <input type="checkbox" class="checkbox" data-img-src="">
+            <img src="" width="200px" height="160px" style="margin-left: 10px">
             <p> Tags: </p>
           </div>
         </div>
@@ -59,16 +65,18 @@
         <div id="selectedImageContainer"></div>
       </div>
     </div>
-    <footer></footer>
+    <footer class="upload-btn" style="text-align: center;">
+      <a style="text-decoration:none;" href=preview.html> Upload Clothes</a>
+    </footer>
   </div>
 </div>
-
+<!---
 <div class="wrapper">
   <div class="upload-container">
     <div class="upload-img" id="image-gallery"></div>
   </div>
 </div>
-
+-->
 <script>
 // Track selected images
 var selectedImages = [];
@@ -87,20 +95,42 @@ $('.checkbox').change(function () {
 });
 
 // On window load, load images from localStorage
-window.onload = function() {
-  $('.display').each(function() {
-    var displayDiv = $(this);
-    for (var i = 0; i < localStorage.length; i++) {
-      var key = localStorage.key(i);
-      if (key.startsWith('uploadedImage')) {
-        var imageData = localStorage.getItem(key);
-        var imgSrc = imageData;
-        var imgElement = displayDiv.find("img");
-        imgElement.attr("src", imgSrc);
-        imgElement.attr("data-img-src", imgSrc);
-      }
+window.onload = function () {
+  var uploadedImages = []; 
+
+  // Populate the uploadedImages array with image URLs from localStorage
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    if (key.startsWith('uploadedImage')) {
+      var imageData = localStorage.getItem(key);
+      uploadedImages.push(imageData);
     }
-  });
+  }
+
+  // Hide all display boxes initially
+  $('.leftContent .display, .rightContent').hide();
+
+  if (uploadedImages.length > 0) {
+    // Create display boxes based on the number of uploaded images CURRENTLY DOESNT WORK. NEEDS FIXING DURING CI 103!!!
+    for (var i = 0; i < uploadedImages.length; i++) {
+      console.log(i);
+      var displayIndex = i % 2; 
+      if (displayIndex == 0) {
+        var displayDiv = $('.leftContent .display').eq(displayIndex);
+      } else if (displayIndex === 1) {
+        var displayDiv = $('.leftContent .display').eq(0); 
+      }
+
+      var imgElement = displayDiv.find("img");
+      imgElement.attr("src", uploadedImages[i]);
+      imgElement.attr("data-img-src", uploadedImages[i]);
+      displayDiv.show(); 
+    }
+    $('#hiddenMessage').hide();
+    $('.rightContent').show();
+  } else {
+    $('hiddenMessage').show
+  }
 };
 
 function updateSelectedImages() {
@@ -110,6 +140,18 @@ function updateSelectedImages() {
   }
   $('#selectedImageContainer').html(selectedImagesHtml);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  const tagList = localStorage.getItem('tagList');
+
+  if (tagList) {
+    const tags = JSON.parse(tagList);
+    const lastTag = tags[tags.length - 1]
+    //const tags = JSON.parse(tagList).join(', '); <--- for multiple tags on one item
+    document.getElementById('displayTags').textContent = lastTag;
+  }
+});
+
 
 // This is the updated searchbar code
   const search = () => {
