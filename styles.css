@@ -505,17 +505,12 @@ svg {
     flex-grow: 1;
 }
 
-.right-box{
-    padding: 50px;
-    flex-basis:50%;
-    flex-grow: 1;
-}
-
 .input-box{
+    display: flex;
     width: 100;
     padding: 10px;
     margin: 10px 0;
     border: 1px;
-    outline: none;
-    background:transparent;
+    outline: black;
+    background-color:rgb(42, 194, 95);
 }

@@ -12,11 +12,24 @@
         <div class="left-box">
             <form>
                 <input type="text" placeholder="Your Name" class="input-box">
-                <input type="text" placeholder="Username" class="input-box">
-                <input type="email" placeholder="Your Email" class="input-box">
-                <input type="password" placeholder="Create Password" class="input-box">            </form>
+                <input type="text" id="username" placeholder="Username" class="input-box">
+                <input type="email" id="email" placeholder="Your Email" class="input-box">
+                <input type="password" id="password" placeholder="Create Password" class="input-box">
                 <button type="submit">SIGN UP</button>
             </form>
         </div>
     </div>
 </div>
+<script>
+   function createAccount() {
+ 	var username = document.getElementById('username').value;
+	var password = document.getElementById('password').value;
+	
+	if (username && password) {
+	   alert(username + "'s account has been created");
+	}
+	else {
+	   alert('Invalid input. Please fill in all the necessary fields');
+	}
+   }
+</script>
