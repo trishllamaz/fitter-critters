@@ -20,7 +20,7 @@
             <!-- Dropdown for selecting tags -->
             <div id="dropdown-container">
                 <label for="dropdown">Select your Tag:</label>
-                <select id="dropdown">
+                <select id="dropdown" multiple>
                     <option value="None">None</option>
                     <option value="Shirt">Shirts</option>
                     <option value="Jacket">Jackets</option>
@@ -45,9 +45,17 @@
         }
     };
     function saveTags() {
-        var selectedTag = document.getElementById("dropdown").value;
-        var tagList = localStorage.getItem("tagList") ? JSON.parse(localStorage.getItem("tagList")): [];
-        tagList.push(selectedTag);
+        var selectedTags = [];
+        var selectElement = document.getElementById("dropdown");
+        var tagList = localStorage.getItem("tagList") ? JSON.parse(localStorage.getItem("tagList")) : [];
+
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.selected) {
+                selectedTags.push(option.value);
+            }
+        }
+        tagList.push(selectedTags);
         localStorage.setItem("tagList", JSON.stringify(tagList));
         window.location.href = "closet.html";
     }
