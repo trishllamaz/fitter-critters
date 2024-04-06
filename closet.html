@@ -41,6 +41,10 @@
       <p style="margin-top: 10%;">No images to display. </p>
       <p> Please press the "Upload Clothes" button to continue creating your online closet</p>
     </div>
+    <div id="noSearchResults" style="text-align: center;">
+      <p style="margin-top: 10%;">No images to display. </p>
+      <p> No clothing found matching search term... please try again</p>
+    </div>
     <div class="closet-wrapper">
       <div class="leftContent">
         <div class="left">
@@ -108,7 +112,7 @@ window.onload = function () {
   }
 
   // Hide all display boxes initially
-  $('.leftContent .display, .rightContent').hide();
+  $('.leftContent .display, .rightContent, #noSearchResults').hide();
 
   if (uploadedImages.length > 0) {
     // Create display boxes based on the number of uploaded images CURRENTLY DOESNT WORK. NEEDS FIXING DURING CI 103!!!
@@ -129,7 +133,7 @@ window.onload = function () {
     $('#hiddenMessage').hide();
     $('.rightContent').show();
   } else {
-    $('hiddenMessage').show
+    $('#hiddenMessage').show
   }
 };
 
@@ -153,25 +157,35 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// This is the updated searchbar code
-  const search = () => {
+const search = () => {
   const searchbox = document.getElementById("txtSearch").value.toUpperCase();
   const product = document.querySelectorAll(".product");
+  let anyMatch = false;
 
   for (var i = 0; i < product.length; i++) {
     let match = product[i].getElementsByTagName("p")[0];
 
     if (match) {
       let textValue = match.textContent || match.innerHTML;
-
+      
       if (textValue.toUpperCase().indexOf(searchbox) > -1) {
         product[i].style.display = "";
+        anyMatch = true;
       } else {
         product[i].style.display = "none";
       }
     }
   }
+
+  if (!anyMatch) {
+    $('#noSearchResults').show();
+    $('.rightContent').hide();
+  } else {
+    $('#noSearchResults').hide();
+    $('.rightContent').show();
+  }
 };
+
 
 document.getElementById("frmSearch").addEventListener("input", (event) => {
   event.preventDefault();
