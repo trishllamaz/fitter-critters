@@ -108,8 +108,10 @@ window.onload = function () {
     if (key.startsWith('uploadedImage')) {
       var imageData = localStorage.getItem(key);
       uploadedImages.push(imageData);
+
     }
   }
+
 
   // Hide all display boxes initially
   $('.leftContent .display, .rightContent, #noSearchResults').hide();
@@ -130,8 +132,7 @@ window.onload = function () {
       imgElement.attr("data-img-src", uploadedImages[i]);
       displayDiv.show(); 
     }
-    $('#hiddenMessage').hide();
-    $('.rightContent').show();
+  
   } else {
     $('#hiddenMessage').show
   }
