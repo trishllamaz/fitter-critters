@@ -1,35 +1,71 @@
 <!DOCTYPE html>
+<html>
+
 <head>
-  <link href="styles.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<div class="topnav">
-  <a href=index.html> Back Home </a>
-</div>
-<div>
-    <h1>Create an Account</h1>
-    <div class="signup-box">
-        <div class="left-box">
-            <form>
-                <input type="text" placeholder="Your Name" class="input-box">
-                <input type="text" id="username" placeholder="Username" class="input-box">
-                <input type="email" id="email" placeholder="Your Email" class="input-box">
-                <input type="password" id="password" placeholder="Create Password" class="input-box">
-                <button type="submit">SIGN UP</button>
-            </form>
+  <div class="topnav">
+    <a href=index.html> Back Home </a>
+  </div>
+
+  <div class="container" id="container">
+    <div class="form-container sign-up">
+        <form>
+            <h1>Create Account</h1>
+            
+            <span>Use your email for registeration</span>
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button>Sign Up</button>
+        </form>
+    </div>
+    <div class="form-container sign-in">
+        <form>
+            <h1>Sign In</h1>
+            
+            <span>Use your email password</span>
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <a href="#">Forget Your Password?</a>
+            <button>Sign In</button>
+        </form>
+    </div>
+    <div class="toggle-container">
+        <div class="toggle">
+            <div class="toggle-panel toggle-left">
+                <h1>Welcome Back!</h1>
+                <p>Enter your personal details to use all of site features</p>
+                <button class="hidden" id="login">Sign In</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Hello, Fitter!</h1>
+                <p>Register with your personal details to use all of site features</p>
+                <button class="hidden" id="register">Sign Up</button>
+            </div>
         </div>
     </div>
 </div>
+
 <script>
-   function createAccount() {
- 	var username = document.getElementById('username').value;
-	var password = document.getElementById('password').value;
-	
-	if (username && password) {
-	   alert(username + "'s account has been created");
-	}
-	else {
-	   alert('Invalid input. Please fill in all the necessary fields');
-	}
-   }
+
+const container = document.getElementById('container');
+const registerBtn = document.getElementById('register');
+const loginBtn = document.getElementById('login');
+
+registerBtn.addEventListener('click', () => {
+    container.classList.add("active");
+});
+
+loginBtn.addEventListener('click', () => {
+    container.classList.remove("active");
+});
+
 </script>
+</body>
+
+</html>
