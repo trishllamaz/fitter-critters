@@ -50,6 +50,9 @@
         <div class="left">
           <div class="display product">
             <input type="checkbox" class="checkbox" data-img-src="">
+            <div style = "float:right;" id = "edit">
+              <a href="edit.html">.</a>
+            </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <div>
               <p> Tags: <span id="displayTags" style="display: inline;"></span> </p>
@@ -167,6 +170,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+function editData() {
+  console.log
+}
 
 const search = () => {
   const searchbox = document.getElementById("txtSearch").value.toUpperCase();
