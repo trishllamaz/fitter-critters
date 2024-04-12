@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
     <link href="styles.css" rel="stylesheet" type="text/css" />
+    <input type="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg">
+    <output></output>
 </head>
 <body>
   <div class="wrapper">
@@ -72,6 +74,52 @@
         reader.readAsDataURL(file);
     }
     document.getElementById('image-upload').addEventListener('change', handleImageUpload);
+
+
+
+
+   // Testing out the multiple image upload below. (Bare with me)
+
+   <!-- File input field -->
+
+   window.onload = function() {
+    const output = document.querySelector("output")
+    const input = document.querySelector("input")
+    let imagesArray = []
+
+    function displayImages() {
+        let images = ""
+        imagesArray.forEach((image, index) => {
+            images += `<div class="image">
+                <img src="${URL.createObjectURL(image)}" alt="image">
+                <span onclick="deleteImage(${index})">&times;</span>
+              </div>`
+    
+        })
+        output.innerHTML = images
+    }
+
+    input.addEventListener("change", () => {
+        const files = input.files
+        for (let i = 0; i < files.length; i++) {
+        imagesArray.push(files[i])
+        }
+        displayImages()
+
+    })
+
+    function deleteImage(index) {
+        imagesArray.splice(index, 1)
+        displayImages()
+        }
+
+    }
+   
+
+
+
+
+
 </script>
 </body>
 </html>
