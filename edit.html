@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<head>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div class="wrapper">
+    <form class="upload-wrapper">
+        <div class="upload-container">
+            <div class="upload-img">
+                <img id="preview-image" src="#" alt="">
+            </div>
+            <p class="upload-text">Please choose an image to upload.</p>
+            
+            <!-- File input field -->
+            <input type="file" class="visually-hidden" id="image-upload" accept="image/*">
+
+            <!-- File input button -->
+            <label for="image-upload" class="upload-btn">Choose Image</label>
+
+            <!-- Dropdown for selecting tags -->
+            <div id="dropdown-container">
+                <label for="dropdown">Select your Tag:</label>
+                <select id="dropdown" multiple>
+                    <option value="None">None</option>
+                    <option value="Shirt">Shirts</option>
+                    <option value="Jacket">Jackets</option>
+                    <option value="Pants">Pants</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="Neutral">Neutral</option>
+                    <option value="Colorful">Colorful</option>
+                    <option value="Denim">Denim</option>
+                </select>
+            </div>
+                <input type="submit" value="Save">
+                <input type="submit" value="Delete">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    window.onload = function() {
+        var imageData = localStorage.getItem('uploadedImage');
+        if (imageData) {
+            document.getElementById('preview-image').src = imageData;
+        }
+    };
+    function saveTags() {
+        var selectedTags = [];
+        var selectElement = document.getElementById("dropdown");
+        var tagList = localStorage.getItem("tagList") ? JSON.parse(localStorage.getItem("tagList")) : [];
+
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.selected) {
+                selectedTags.push(option.value);
+            }
+        }
+        tagList.push(selectedTags);
+        localStorage.setItem("tagList", JSON.stringify(tagList));
+        window.location.href = "closet.html";
+    }
+
+    function handleImageUpload(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            document.getElementById('preview-image').src = e.target.result;
+            localStorage.setItem('uploadedImage', e.target.result);
+        }
+        
+        reader.readAsDataURL(file);
+    }
+    document.getElementById('image-upload').addEventListener('change', handleImageUpload);
+</script>
+</body>
+</html>
