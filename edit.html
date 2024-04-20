@@ -31,21 +31,22 @@
                     <option value="Denim">Denim</option>
                 </select>
             </div>
-                <input type="submit" value="Save">
-                <input type="submit" value="Delete">
-            </div>
+            <input type="button" value="Save" onclick="saveTags()">
+            <input type="button" value="Delete" onclick="deleteImage()">
         </div>
     </form>
 </div>
-
 <script>
-
+    // Author: Kylie Sodano
+    // These functions serve to allow users to delete or edit their closet.
+    // Delete the images removes them from local storage and the closet page
     window.onload = function() {
         var imageData = localStorage.getItem('uploadedImage');
         if (imageData) {
             document.getElementById('preview-image').src = imageData;
         }
     };
+
     function saveTags() {
         var selectedTags = [];
         var selectElement = document.getElementById("dropdown");
@@ -57,6 +58,7 @@
                 selectedTags.push(option.value);
             }
         }
+
         tagList.push(selectedTags);
         localStorage.setItem("tagList", JSON.stringify(tagList));
         window.location.href = "closet.html";
@@ -73,7 +75,16 @@
         
         reader.readAsDataURL(file);
     }
+
+    function deleteImage() {
+        localStorage.removeItem('uploadedImage');
+        localStorage.removeItem('tagList');
+        window.location.href = "closet.html";
+    }
+
+
     document.getElementById('image-upload').addEventListener('change', handleImageUpload);
 </script>
 </body>
 </html>
+
