@@ -67,6 +67,13 @@
             <p> Tags: </p>
           </div>
         </div>
+        <div class="right">
+          <div class="display product">
+            <input type="checkbox" class="checkbox" data-img-src="">
+            <img src="" width="200px" height="160px" style="margin-left: 10px">
+            <p> Tags: </p>
+          </div>
+        </div>
       </div>
       <div class="rightContent">
         <p>Your Selected Outfit</p>
@@ -75,6 +82,7 @@
           Save Outfit
         </div>
       </div>
+      
     </div>
     <footer class="upload-btn" style="text-align: center;">
       <a style="text-decoration:none;" href=preview.html> Upload Clothes</a>
@@ -112,7 +120,7 @@ $('.checkbox').change(function () {
 
 // On window load, load images from localStorage
 window.onload = function () {
-  var uploadedImages = []; 
+  var uploadedImages = [];
 
   // Populate the uploadedImages array with image URLs from localStorage
   for (var i = 0; i < localStorage.length; i++) {
@@ -120,37 +128,30 @@ window.onload = function () {
     if (key.startsWith('uploadedImage')) {
       var imageData = localStorage.getItem(key);
       uploadedImages.push(imageData);
-
+      console.log(uploadedImages)
     }
   }
-
 
   // Hide all display boxes initially
   $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
 
   if (uploadedImages.length > 0) {
-    // Create display boxes based on the number of uploaded images CURRENTLY DOESNT WORK. NEEDS FIXING DURING CI 103!!!
     for (var i = 0; i < uploadedImages.length; i++) {
-      console.log(i);
-      var displayIndex = i % 2; 
-      if (displayIndex == 0) {
-        var displayDiv = $('.leftContent .display').eq(displayIndex);
-      } else if (displayIndex === 1) {
-        var displayDiv = $('.leftContent .display').eq(0); 
-      }
-
+      var displayIndex = i % 3;
+      var displayDiv = $('.leftContent .display').eq(displayIndex);
       var imgElement = displayDiv.find("img");
       imgElement.attr("src", uploadedImages[i]);
       imgElement.attr("data-img-src", uploadedImages[i]);
-      displayDiv.show(); 
+      displayDiv.show();
     }
-    $('#hiddenMessage').hide();
+
     $('.rightContent').show();
-  
+    $('#hiddenMessage').hide();
   } else {
     $('#hiddenMessage').show();
   }
 };
+
 
 function updateSelectedImages() {
   var selectedImagesHtml = '';
@@ -171,8 +172,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-function editData() {
-  console.log
+// Function gathers data from the page and transfers it to the edit page
+// Author: Kylie Sodano
+function editItem() {
+  var imgSrc = $(this).closest('.product').find('img').attr('src');
+  var tags = $(this).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
+            
+  localStorage.setItem('selectedItem', JSON.stringify({ imageSrc: imgSrc, tags: tags }));
 }
 
 const search = () => {
