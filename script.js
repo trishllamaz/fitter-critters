@@ -1,4 +1,4 @@
-/* Here Is Script For The Login Page */
+/* Here Is Script For The Login Page Interactivity Part */
 
 const container = document.getElementById('login_container');
 const registerBtn = document.getElementById('register');
