@@ -63,22 +63,28 @@
     }
 
     function handleImageUpload(event) {
-        var file = event.target.files[0];
-        var reader = new FileReader();
-        
+    const files = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
         reader.onload = function(e) {
-            document.getElementById('preview-image').src = e.target.result;
-            localStorage.setItem('uploadedImage', e.target.result);
-        }
-        
+            const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+            uploadedImages.push(e.target.result);
+            localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+            displayImages(); // Call the displayImages function to update the displayed images
+        };
+
         reader.readAsDataURL(file);
     }
-    document.getElementById('image-upload').addEventListener('change', handleImageUpload);
+}
+
+document.getElementById('image-upload').addEventListener('change', handleImageUpload);
 
 
 
-
-   // Testing out the multiple image upload below. (Bare with me)
+   // Testing out the multiple image upload below. Author: Patricia Tran
 
    <!-- File input field -->
     const output = document.querySelector("output")
@@ -86,6 +92,18 @@
     let imagesArray = []
 
     function displayImages() {
+    let images = "";
+    const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+
+    uploadedImages.forEach((image, index) => {
+        images += `<div class="image">
+            <img src="${image}" alt="image">
+            <span onclick="deleteImage(${index})">&times;</span>
+        </div>`;
+    });
+
+    output.innerHTML = images;
+}
         let images = ""
         imagesArray.forEach((image, index) => {
             images += `<div class="image">
@@ -95,7 +113,7 @@
     
         })
         output.innerHTML = images
-    }
+    
 
     input.addEventListener("change", () => {
         const files = input.files
