@@ -118,38 +118,28 @@ $('.checkbox').change(function () {
   updateSelectedImages();
 });
 
-// On window load, load images from localStorage
 window.onload = function () {
-  var uploadedImages = [];
+    var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
 
-  // Populate the uploadedImages array with image URLs from localStorage
-  for (var i = 0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
-    if (key.startsWith('uploadedImage')) {
-      var imageData = localStorage.getItem(key);
-      uploadedImages.push(imageData);
-      console.log(uploadedImages)
+    // Hide all display boxes initially
+    $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
+
+    // Array of images keeps updating. Author: Patricia Tran
+    if (uploadedImages.length > 0) {
+        for (var i = 0; i < uploadedImages.length; i++) {
+            var displayIndex = i % 3;
+            var displayDiv = $('.leftContent .display').eq(displayIndex);
+            var imgElement = displayDiv.find("img");
+            imgElement.attr("src", uploadedImages[i]);
+            imgElement.attr("data-img-src", uploadedImages[i]);
+            displayDiv.show();
+        }
+
+        $('.rightContent').show();
+        $('#hiddenMessage').hide();
+    } else {
+        $('#hiddenMessage').show();
     }
-  }
-
-  // Hide all display boxes initially
-  $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
-
-  if (uploadedImages.length > 0) {
-    for (var i = 0; i < uploadedImages.length; i++) {
-      var displayIndex = i % 3;
-      var displayDiv = $('.leftContent .display').eq(displayIndex);
-      var imgElement = displayDiv.find("img");
-      imgElement.attr("src", uploadedImages[i]);
-      imgElement.attr("data-img-src", uploadedImages[i]);
-      displayDiv.show();
-    }
-
-    $('.rightContent').show();
-    $('#hiddenMessage').hide();
-  } else {
-    $('#hiddenMessage').show();
-  }
 };
 
 
