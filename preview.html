@@ -2,6 +2,7 @@
 <head>
     <link href="styles.css" rel="stylesheet" type="text/css" />
     <input type="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <output></output>
 </head>
 <body>
@@ -22,8 +23,7 @@
             <!-- Dropdown for selecting tags -->
             <div id="dropdown-container">
                 <label for="dropdown">Select your Tag:</label>
-                <select id="dropdown" multiple>
-                    <option value="None">None</option>
+                <select id="dropdown" onchange="newTag()" multiple>
                     <option value="Shirt">Shirts</option>
                     <option value="Jacket">Jackets</option>
                     <option value="Pants">Pants</option>
@@ -31,8 +31,10 @@
                     <option value="Neutral">Neutral</option>
                     <option value="Colorful">Colorful</option>
                     <option value="Denim">Denim</option>
+                    <option value="Custom">Custom</option>
                 </select>
             </div>
+            <input type="text" id="customTagInput" style="display: none;">
             <input type="button" value="Submit" onclick="saveTags()">
         </div>
     </form>
@@ -45,7 +47,9 @@
         if (imageData) {
             document.getElementById('preview-image').src = imageData;
         }
+        $("#customTagInput").hide()
     };
+
     function saveTags() {
         var selectedTags = [];
         var selectElement = document.getElementById("dropdown");
@@ -53,13 +57,32 @@
 
         for (var i = 0; i < selectElement.options.length; i++) {
             var option = selectElement.options[i];
-            if (option.selected) {
+            if (option.selected && option.value !== "Custom") {
                 selectedTags.push(option.value);
             }
         }
+
+        var customTagInput = document.getElementById("customTagInput");
+        if (customTagInput.value.trim() !== "") {
+            selectedTags.push(customTagInput.value.trim());
+        }
+
         tagList.push(selectedTags);
         localStorage.setItem("tagList", JSON.stringify(tagList));
         window.location.href = "closet.html";
+    }
+
+    function newTag() {
+        var selectElement = document.getElementById("dropdown");
+      var customTagInput = document.getElementById("customTagInput");
+
+      var customOptionSelected = Array.from(selectElement.selectedOptions).some(option => option.value === "Custom");
+
+       if (customOptionSelected) {
+          customTagInput.style.display = "inline-block";
+       } else {
+          customTagInput.style.display = "none";
+       }
     }
 
     function handleImageUpload(event) {
