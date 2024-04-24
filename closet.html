@@ -2,9 +2,11 @@
 <html>
 <head>
   <link href="styles.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="script.js"></script>
 </head>
+
 <body>
 <div class="topnav">
   <a href=help.html> Need Help? </a>
@@ -13,8 +15,11 @@
   <a href=social.html> Public Outfits </a>
   <!-- This is the search bar updated -->
   <form id="frmSearch" class="search2" method="get">
-    <input class="search2" id="txtSearch" type="text" name="search_bar" size="30" maxlength="255"
-           value="" style="left: 300px; top: 153px; width: 293px; height: 26px;" />
+    <div class="search">
+      <span class="search-icon material-symbols-outlined">search</span>
+      <input class="search2 search-input" id="txtSearch" type="text search" placeholder="Search" name="search_bar" size="30" maxlength="255"
+           value="" style="left: 300px; top: 153px; width: 293px; height: 26px;"/>
+    </div>
   </form>
 </div>
 
@@ -27,7 +32,7 @@
   <button class="btn" onclick="filterSelection('neutral')"> Neutral</button>
   <button class="btn" onclick="filterSelection('colorful')"> Colorful</button>
   <button class="btn" onclick="filterSelection('denim')"> Denim</button>
-  <button class="btn" onclick="filterSelection('favorite')"> Favorite</button>
+  <button class="btn" onclick="location.href='favorite.html'"> Favorite</button>
 </div>
 
 <div class="filter-container">
@@ -118,28 +123,38 @@ $('.checkbox').change(function () {
   updateSelectedImages();
 });
 
+// On window load, load images from localStorage
 window.onload = function () {
-    var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+  var uploadedImages = [];
 
-    // Hide all display boxes initially
-    $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
-
-    // Array of images keeps updating. Author: Patricia Tran
-    if (uploadedImages.length > 0) {
-        for (var i = 0; i < uploadedImages.length; i++) {
-            var displayIndex = i % 3;
-            var displayDiv = $('.leftContent .display').eq(displayIndex);
-            var imgElement = displayDiv.find("img");
-            imgElement.attr("src", uploadedImages[i]);
-            imgElement.attr("data-img-src", uploadedImages[i]);
-            displayDiv.show();
-        }
-
-        $('.rightContent').show();
-        $('#hiddenMessage').hide();
-    } else {
-        $('#hiddenMessage').show();
+  // Populate the uploadedImages array with image URLs from localStorage
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    if (key.startsWith('uploadedImage')) {
+      var imageData = localStorage.getItem(key);
+      uploadedImages.push(imageData);
+      console.log(uploadedImages)
     }
+  }
+
+  // Hide all display boxes initially
+  $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
+
+  if (uploadedImages.length > 0) {
+    for (var i = 0; i < uploadedImages.length; i++) {
+      var displayIndex = i % 3;
+      var displayDiv = $('.leftContent .display').eq(displayIndex);
+      var imgElement = displayDiv.find("img");
+      imgElement.attr("src", uploadedImages[i]);
+      imgElement.attr("data-img-src", uploadedImages[i]);
+      displayDiv.show();
+    }
+
+    $('.rightContent').show();
+    $('#hiddenMessage').hide();
+  } else {
+    $('#hiddenMessage').show();
+  }
 };
 
 
