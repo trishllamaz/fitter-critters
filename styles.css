@@ -771,3 +771,36 @@ svg {
 .login_container.active .toggle-right {
     transform: translateX(200%);
 }
+
+/* Here Is Style For The Searchbar */
+.search {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 30px;
+    background-color: #fff;
+    width: 500;
+    margin: 10px;
+    transition: background 0.25s;
+}
+
+.search:focus-within {
+    background: #f1f1f1;
+}
+
+.search-input {
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    margin-left: 5px;
+    outline: none;
+    border: none;
+    background: transparent;
+    flex: 1;
+}
+
+.search-input::placeholder,
+.search-icon {
+    color: rgba(0, 0, 0, 0.5);
+}
