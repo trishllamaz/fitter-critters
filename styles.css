@@ -2,65 +2,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'); 
 
 
-
-output{
-    width: 100%;
-    min-height: 150px;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 15px;
-    position: relative;
-    border-radius: 5px;
-  }
-  
-  output .image{
-    height: 150px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    position: relative;
-  }
-  
-  output .image img{
-    height: 100%;
-    width: 100%;
-  }
-  
-  output .image span {
-    position: absolute;
-    top: -4px;
-    right: 4px;
-    cursor: pointer;
-    font-size: 22px;
-    color: white;
-  }
-  
-  output .image span:hover {
-    opacity: 0.8;
-  }
-  
-  output .span--hidden{
-    visibility: hidden;
-  }
-*{
+/* Commented these out. What do you think of the box layout on closet.html? Author: Patricia Tran 
+{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-
-
-
-
-
-
-
-*{
+{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-}
+} */
 
 html {
     margin: 0;
@@ -439,7 +392,6 @@ a {
     color: #fff;
     padding: 7px 18px;
     margin-top: 24px;
-    margin-bottom: 15px;
     border-radius: 30px;
     cursor: pointer;
     box-shadow: #fb6f92 0px 8px 10px -11px;
@@ -804,53 +756,4 @@ svg {
 .search-input::placeholder,
 .search-icon {
     color: rgba(0, 0, 0, 0.5);
-}
-
-/* Modal Code */
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: 10% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-}
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-/* Button styles inside the modal */
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
 }
