@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <head>
     <link href="styles.css" rel="stylesheet" type="text/css" />
-    <input type="file" multiple="multiple" accept="image/jpeg, image/png, image/jpg">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <output></output>
 </head>
@@ -95,8 +94,10 @@
         reader.onload = function(e) {
             const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
             uploadedImages.push(e.target.result);
+            const imageData = e.target.result;
+            localStorage.setItem('uploadedImage', imageData);
+            document.getElementById('preview-image').src = imageData;
             localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
-            displayImages(); // Call the displayImages function to update the displayed images
         };
 
         reader.readAsDataURL(file);
@@ -114,19 +115,7 @@ document.getElementById('image-upload').addEventListener('change', handleImageUp
     const input = document.querySelector("input")
     let imagesArray = []
 
-    function displayImages() {
-    let images = "";
-    const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
 
-    uploadedImages.forEach((image, index) => {
-        images += `<div class="image">
-            <img src="${image}" alt="image">
-            <span onclick="deleteImage(${index})">&times;</span>
-        </div>`;
-    });
-
-    output.innerHTML = images;
-}
         let images = ""
         imagesArray.forEach((image, index) => {
             images += `<div class="image">
