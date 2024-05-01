@@ -2,18 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'); 
 
 
-/* Commented these out. What do you think of the box layout on closet.html? Author: Patricia Tran 
-{
+*{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-
-{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-} */
 
 html {
     margin: 0;
