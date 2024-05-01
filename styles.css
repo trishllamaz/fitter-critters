@@ -397,6 +397,17 @@ a {
     display: none;
 }
 
+/* Section for links on social preview page */
+
+.social-media-links{
+    display: flexbox;
+    justify-content: space-between;
+    margin: 15px 0 0 0;
+    align-items: center; /* This aligns the items vertically center in the container */
+    margin: 15px 0 0 0; /* Top margin 15px, no bottom margin */
+    padding: 0;
+}
+
 /* Set styles for the closet page */
 .container {
     min-height: 100%;
