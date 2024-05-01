@@ -1,0 +1,26 @@
+body {
+    background-color: #f4a2a2;
+}
+
+.content {
+    display: flexbox;
+    text-align: center;
+    
+}
+
+
+
+.content {
+    background-color: #fff;
+    min-width: 200px;
+    min-height: 200px;
+    border-radius: 12px;
+    box-shadow: #fb6f92 0px 8px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px;
+    margin: 20px;
+}
