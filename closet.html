@@ -56,8 +56,8 @@
         <div class="left">
           <div class="display product">
             <input type="checkbox" class="checkbox" data-img-src="">
-            <div style = "float:right;">
-              <a href="#" class = "edit">.</a>
+            <div style = "float:right;" id = "edit">
+              <a href="edit.html">.</a>
             </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <div>
@@ -68,9 +68,6 @@
         <div class="center">
           <div class="display product">
             <input type="checkbox" class="checkbox" data-img-src="">
-            <div style = "float:right;">
-              <a href="#" class = "edit">.</a>
-            </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <p> Tags: </p>
           </div>
@@ -78,9 +75,6 @@
         <div class="right">
           <div class="display product">
             <input type="checkbox" class="checkbox" data-img-src="">
-            <div style = "float:right;">
-              <a href="#" class = "edit">.</a>
-            </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <p> Tags: </p>
           </div>
@@ -90,7 +84,8 @@
         <p>Your Selected Outfit</p>
         <div id="selectedImageContainer"></div>
         <div class = 'upload-btn' style="text-align: center;" id = "selectedImages">
-          Save Outfit
+        <a style="text-decoration:none;" href=favorite.html> Save Outfit</a>
+        
         </div>
       </div>
       
@@ -174,22 +169,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-$(document).ready(function() {
-  $('.edit').on('click', function(e) {
-    e.preventDefault(); 
-    editItem(this); 
-  });
-});
-
 // Function gathers data from the page and transfers it to the edit page
 // Author: Kylie Sodano
-function editItem(clickedElement) {
-  var imgSrc = $(clickedElement).closest('.product').find('img').attr('src');
-  console.log(imgSrc)
-  var tags = $(clickedElement).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
+function editItem() {
+  var imgSrc = $(this).closest('.product').find('img').attr('src');
+  var tags = $(this).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
             
   localStorage.setItem('selectedItem', JSON.stringify({ imageSrc: imgSrc, tags: tags }));
-  window.location.href = "edit.html";
 }
 
 const search = () => {
@@ -226,7 +212,20 @@ document.getElementById("frmSearch").addEventListener("input", (event) => {
   event.preventDefault();
   search();
 });
+
+
+// Function to save selected outfits to favorites - Author: Patricia Tran
+function saveOutfits() {
+  if (selectedImages.length > 0) {
+    localStorage.setItem("selectedOutfits", JSON.stringify(selectedImages));
+    window.location.href = "favorite.html";
+  }
+}
+
+// Event listener for "Save Outfit" button
+document.getElementById("selectedImages").addEventListener("click", saveOutfits);
+
+
 </script>
 </body>
 </html>
-
