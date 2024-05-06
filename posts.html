@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uploaded Outfits Gallery</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/ce069e7383.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        #imageGallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        #imageGallery img {
+            width: 300px; /* adjust width as needed */
+            height: auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Uploaded Outfits Gallery</h1>
+    <div id="imageGallery"></div>
+
+    <script>
+        // Fetches the image data from the server
+        fetch('/api/images')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(images => {
+            const gallery = document.getElementById('imageGallery');
+            images.forEach(image => {
+                const imgElement = document.createElement('img');
+                imgElement.src = image.path; // Ensure that the image path is correctly provided by your API
+                imgElement.alt = 'Uploaded Outfit';
+                gallery.appendChild(imgElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading images:', error);
+            const gallery = document.getElementById('imageGallery');
+            gallery.innerText = 'Failed to load images.';
+        });
+    </script>
+</body>
+</html>

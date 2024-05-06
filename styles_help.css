@@ -3,6 +3,11 @@
     margin: 0;
     box-sizing: border-box;
     text-align: center;
+    
+}
+
+body {
+    background-color: #ffdaee9d;
 }
 
 .paragraph_section {

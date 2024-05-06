@@ -1,52 +1,53 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <script src="https://kit.fontawesome.com/ce069e7383.js" crossorigin="anonymous"></script>
+    <title>Upload Outfits</title>
 </head>
 <body>
   <div class="wrapper">
-    <form class="upload-wrapper">
+    <!-- Form for image upload. Using POST method and multipart/form-data for file upload -->
+    <form class="upload-wrapper" action="/upload" method="post" enctype="multipart/form-data">
         <div class="upload-container">
             <div class="upload-img">
-                <img id="preview-image" src="#" alt="">
+                <!-- Preview image container -->
+                <img id="preview-image" src="#" alt="Image preview" style="display:none;">
             </div>
             <p class="upload-text">Please choose an image to upload.</p>
-            
-            <!-- File input field -->
-            <input type="file" class="visually-hidden" id="image-upload" accept="image/*">
-
-            <!-- File input button -->
+            <!-- Hidden file input field -->
+            <input type="file" class="visually-hidden" id="image-upload" name="imageFile" accept="image/*">
+            <!-- Label acts as a button for file input -->
             <label for="image-upload" class="upload-btn">Choose Image</label>
-            <label type="submit" class="upload-btn">Submit</label>
+            <!-- Submit button for the form -->
+            <button type="submit" class="upload-btn">Submit</button>
             <a class="upload-btn" href="social.html">Exit</a>
         </div>
     </form>
-</div>
+  </div>
 
 <script>
-    // Retrieve the image data from localStorage if available
+    document.getElementById('image-upload').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var previewImage = document.getElementById('preview-image');
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block'; // Show the preview image
+            // Store the image data in localStorage for persistence across sessions
+            localStorage.setItem('uploadedImage', e.target.result);
+        }
+        reader.readAsDataURL(file);
+    });
+
     window.onload = function() {
         var imageData = localStorage.getItem('uploadedImage');
         if (imageData) {
-            document.getElementById('preview-image').src = imageData;
+            var previewImage = document.getElementById('preview-image');
+            previewImage.src = imageData;
+            previewImage.style.display = 'block'; // Ensure the preview is visible if image data exists
         }
     };
-
-    // This is the function to handle image upload
-    function handleImageUpload(event) {
-        var file = event.target.files[0];
-        var reader = new FileReader();
-        
-        reader.onload = function(e) {
-            document.getElementById('preview-image').src = e.target.result;
-            // Store the image data in localStorage
-            localStorage.setItem('uploadedImage', e.target.result);
-        }
-        
-        reader.readAsDataURL(file);
-    }
-
-    // This is the event listener to the file input field
-    document.getElementById('image-upload').addEventListener('change', handleImageUpload);
 </script>
 </body>
 </html>
