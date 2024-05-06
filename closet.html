@@ -84,7 +84,8 @@
         <p>Your Selected Outfit</p>
         <div id="selectedImageContainer"></div>
         <div class = 'upload-btn' style="text-align: center;" id = "selectedImages">
-          Save Outfit
+        <a style="text-decoration:none;" href=favorite.html> Save Outfit</a>
+        
         </div>
       </div>
       
@@ -211,6 +212,20 @@ document.getElementById("frmSearch").addEventListener("input", (event) => {
   event.preventDefault();
   search();
 });
+
+
+// Function to save selected outfits to favorites - Author: Patricia Tran
+function saveOutfits() {
+  if (selectedImages.length > 0) {
+    localStorage.setItem("selectedOutfits", JSON.stringify(selectedImages));
+    window.location.href = "favorite.html";
+  }
+}
+
+// Event listener for "Save Outfit"
+document.getElementById("selectedImages").addEventListener("click", saveOutfits);
+
+
 </script>
 </body>
 </html>

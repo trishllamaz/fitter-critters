@@ -28,6 +28,26 @@
 
   
 <script src="favorite.js"></script>
+
+<script>
+
+// Author: Patricia Tran
+// Retrieve selected images from local storage
+var selectedOutfits = JSON.parse(localStorage.getItem("selectedOutfits"));
+
+// Display
+if (selectedOutfits) {
+  var container = document.querySelector(".saved-lists-container");
+  selectedOutfits.forEach(function(imageSrc) {
+    var img = document.createElement("img");
+    img.src = imageSrc;
+    container.appendChild(img);
+  });
+}
+
+
+
+</script>
 </body>
 
 </html>

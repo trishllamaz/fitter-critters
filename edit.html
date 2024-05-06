@@ -41,9 +41,11 @@
     // These functions serve to allow users to delete or edit their closet.
     // Delete the images removes them from local storage and the closet page
     window.onload = function() {
-        var imageData = localStorage.getItem('uploadedImage');
-        if (imageData) {
-            document.getElementById('preview-image').src = imageData;
+        var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+        var imgSrc = storedItem.imageSrc;
+        console.log(imgSrc)
+        if (imgSrc) {
+            document.getElementById('preview-image').src = imgSrc;
         }
     };
 
@@ -69,19 +71,35 @@
         var reader = new FileReader();
         
         reader.onload = function(e) {
-            document.getElementById('preview-image').src = e.target.result;
-            localStorage.setItem('uploadedImage', e.target.result);
+            const imageData = e.target.result;
+            const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+            var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+            const index = uploadedImages.indexOf(storedItem.imageSrc);
+            if (index !== -1) {
+                uploadedImages[index] = imageData;
+            } else {
+                uploadedImages.push(imageData);
+            }
+            localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+            storedItem.imageSrc = imageData;
+            localStorage.setItem('selectedItem', JSON.stringify(storedItem));
+            document.getElementById('preview-image').src = imageData;
         }
-        
         reader.readAsDataURL(file);
     }
 
     function deleteImage() {
-        localStorage.removeItem('uploadedImage');
-        localStorage.removeItem('tagList');
+        var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+        var imgSrc = storedItem.imageSrc;
+        var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+        const index = uploadedImages.indexOf(imgSrc);
+        if (index !== -1) {
+            uploadedImages.splice(index, 1);
+        }
+        localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+        localStorage.removeItem('selectedItem');
         window.location.href = "closet.html";
     }
-
 
     document.getElementById('image-upload').addEventListener('change', handleImageUpload);
 </script>
