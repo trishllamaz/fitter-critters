@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="submit.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Submit Image Test</title>
+</head>
+
+<body>
+    <div class="preview-container">
+        <!-- File input for selecting an image -->
+        <input type="file" id="photo" accept="image/*" hidden>
+        <!-- Container to display the selected image -->
+        <div class="img-area" data-img="">
+            <i class='bx bxs-cloud-upload icon'></i>
+            <h3>Upload Image</h3>
+            <p>Image size must be less than <span>8MB</span></p>
+        </div>
+        <!-- Button to trigger file input -->
+        <button class="select-image">Select Image</button>
+
+        <!-- Tags section -->
+        <div class="tags-wrapper">
+            <div class="title">
+                <h2>Tags</h2>
+            </div>
+            <div class="content">
+                <p>Press enter or add a comma after each tag</p>
+                <ul><input type="text" spellcheck="false"></ul>
+            </div>
+            <div class="details">
+                <p><span>10</span> tags are remaining</p>
+                <button>Remove All</button>
+            </div>
+        </div>
+        <!-- Button to submit the image -->
+        <button class="upload-btn" id="submitBtn" style="align-items: center;">Submit</button>
+    </div>
+
+    <script type="module">
+        const selectImageBtn = document.querySelector('.select-image');
+        const fileInput = document.querySelector('#photo');
+        const imgArea = document.querySelector('.img-area');
+
+        // Event listener for the select image button
+        selectImageBtn.addEventListener('click', function () {
+            console.log("Button clicked");
+            fileInput.click();
+        });
+
+        // Event listener for file input change
+        fileInput.addEventListener('change', function () {
+            const image = this.files[0];
+            if (image.size < 8000000) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const allImg = imgArea.querySelectorAll('img');
+                    allImg.forEach(item => item.remove());
+                    const imgUrl = reader.result;
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    imgArea.appendChild(img);
+                    imgArea.classList.add('active');
+                    imgArea.dataset.img = image.name;
+                };
+                reader.readAsDataURL(image);
+            } else {
+                alert("Image size more than 8MB");
+            }
+        });
+
+        // Tag related functions
+        window.remove = function(element, tag) {
+        let index = tags.indexOf(tag);
+        tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
+        element.parentElement.remove();
+        countTags();
+        }
+        
+        const ul = document.querySelector("ul"),
+        input = document.querySelector("input"),
+        tagNumb = document.querySelector(".details span");
+        
+        let maxTags = 10,
+        tags = ["Tops", "Bottoms"];
+        
+        countTags();
+        createTag();
+        
+        function countTags(){
+            input.focus();
+            tagNumb.innerText = maxTags - tags.length;
+        }
+        
+        function createTag(){
+            ul.querySelectorAll("li").forEach(li => li.remove());
+            tags.slice().reverse().forEach(tag =>{
+                let liTag = `<li>${tag} <i class="uit uit-multiply" onclick="remove(this, '${tag}')"></i></li>`;
+                ul.insertAdjacentHTML("afterbegin", liTag);
+            });
+            countTags();
+        }
+        
+        function remove(element, tag){
+            let index  = tags.indexOf(tag);
+            tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
+            element.parentElement.remove();
+            countTags();
+        }
+        
+        function addTag(e){
+            console.log("Key pressed:", e.key); // Debugging statement
+            if(e.key == "Enter"){
+                let tag = e.target.value.replace(/\s+/g, ' ');
+                if(tag.length > 1 && !tags.includes(tag)){
+                    if(tags.length < 10){
+                        tag.split(',').forEach(tag => {
+                            tags.push(tag);
+                            createTag();
+                        });
+                    }
+                }
+                e.target.value = "";
+            }
+        }
+        
+        input.addEventListener("keyup", addTag);
+        
+        const removeBtn = document.querySelector(".details button");
+        removeBtn.addEventListener("click", () =>{
+            tags.length = 0;
+            ul.querySelectorAll("li").forEach(li => li.remove());
+            countTags();
+        });
+
+        // Firebase initialization and image upload
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBB4ll9coIGqle-zOiQEiE1rPwPq95NDuE",
+            authDomain: "fitter-critters.firebaseapp.com",
+            projectId: "fitter-critters",
+            storageBucket: "fitter-critters.appspot.com",
+            messagingSenderId: "517864958606",
+            appId: "1:517864958606:web:6604e725fb95fb5baa77df",
+            measurementId: "G-T0K2M2RDJ7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
+        document.getElementById('submitBtn').addEventListener('click', uploadImage);
+
+        function uploadImage() {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("Please select an image.");
+                return;
+            }
+
+            // Get the current user's ID
+            const user = auth.currentUser;
+            if (!user) {
+                alert("User not authenticated.");
+                return;
+            }
+            const userId = user.uid;
+
+            // Capture upload time
+            const uploadTime = new Date().toISOString(); // Capture current time as upload time
+
+            const metadata = {
+                contentType: file.type,
+                customMetadata: {
+                    userId: userId,
+                    uploadTime: uploadTime,
+                    tags: JSON.stringify(tags) // Tags are added as custom metadata
+                }
+            };
+
+            const storageRef = ref(storage, 'images/' + file.name);
+            const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+            uploadTask.then((snapshot) => {
+                console.log('Image uploaded successfully');
+                getDownloadURL(snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                    alert("Image Upload Successful");
+                }).catch((error) => {
+                    console.error('Error getting download URL:', error);
+                    alert("Error uploading image. Please try again.");
+                });
+            }).catch((error) => {
+                console.error('Error uploading image:', error);
+                alert("Error uploading image. Please try again.");
+            });
+        }
+    </script>
+</body>
