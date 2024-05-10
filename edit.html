@@ -7,7 +7,7 @@
     <form class="upload-wrapper">
         <div class="upload-container">
             <div class="upload-img">
-                <img id="preview-image" src="#" alt="">
+                <img id="preview-images" src="#" alt="">
             </div>
             <p class="upload-text">Please choose an image to upload.</p>
             
@@ -45,7 +45,7 @@
         var imgSrc = storedItem.imageSrc;
         console.log(imgSrc)
         if (imgSrc) {
-            document.getElementById('preview-image').src = imgSrc;
+            document.getElementById('preview-images').src = imgSrc;
         }
     };
 
@@ -83,7 +83,7 @@
             localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
             storedItem.imageSrc = imageData;
             localStorage.setItem('selectedItem', JSON.stringify(storedItem));
-            document.getElementById('preview-image').src = imageData;
+            document.getElementById('preview-images').src = imageData;
         }
         reader.readAsDataURL(file);
     }

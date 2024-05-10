@@ -56,8 +56,8 @@
         <div class="left">
           <div class="display product">
             <input type="checkbox" class="checkbox" data-img-src="">
-            <div style = "float:right;" id = "edit">
-              <a href="edit.html">.</a>
+            <div style = "float:right;">
+              <a href="#" class = "edit">.</a>
             </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <div>
@@ -68,6 +68,9 @@
         <div class="center">
           <div class="display product">
             <input type="checkbox" class="checkbox" data-img-src="">
+            <div style = "float:right;">
+              <a href="#" class = "edit">.</a>
+            </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <p> Tags: </p>
           </div>
@@ -75,6 +78,9 @@
         <div class="right">
           <div class="display product">
             <input type="checkbox" class="checkbox" data-img-src="">
+            <div style = "float:right;">
+              <a href="#" class = "edit">.</a>
+            </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <p> Tags: </p>
           </div>
@@ -169,13 +175,22 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+$(document).ready(function() {
+  $('.edit').on('click', function(e) {
+    e.preventDefault(); 
+    editItem(this); 
+  });
+});
+
 // Function gathers data from the page and transfers it to the edit page
 // Author: Kylie Sodano
-function editItem() {
-  var imgSrc = $(this).closest('.product').find('img').attr('src');
-  var tags = $(this).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
+function editItem(clickedElement) {
+  var imgSrc = $(clickedElement).closest('.product').find('img').attr('src');
+  console.log(imgSrc)
+  var tags = $(clickedElement).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
             
   localStorage.setItem('selectedItem', JSON.stringify({ imageSrc: imgSrc, tags: tags }));
+  window.location.href = "edit.html";
 }
 
 const search = () => {
