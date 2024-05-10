@@ -54,7 +54,7 @@
             </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
             <div>
-              <p> Tags: <span id="displayTags" style="display: inline;"></span> </p>
+              <p> Tags: <span id="displayTags" style="display: inline;"> </span> </p>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@
               <a href="#" class = "edit">.</a>
             </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
-            <p> Tags: </p>
+            <p> Tags: <span id="displayTags" style="display: inline;"> </span> </p>
           </div>
         </div>
         <div class="right">
@@ -75,7 +75,7 @@
               <a href="#" class = "edit">.</a>
             </div>
             <img src="" width="200px" height="160px" style="margin-left: 10px">
-            <p> Tags: </p>
+            <p> Tags: <span id="displayTags" style="display: inline;"> </span> </p>
           </div>
         </div>
       </div>
@@ -124,8 +124,10 @@ $('.checkbox').change(function () {
 });
 
 /// Window onload
-window.onload = function () {
+window.onload = function() {
     var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+    const tagList = localStorage.getItem('tagList');
+    console.log(tagList);
 
     // Hide all display boxes initially
     $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
@@ -146,7 +148,16 @@ window.onload = function () {
     } else {
         $('#hiddenMessage').show();
     }
+    if (tagList) {
+        const tags = JSON.parse(tagList) || [];
+        for (var i = 0; i < tags.length; i++) {
+            var displayIndex = i % 3;
+            var displayDiv = $('.leftContent .display').eq(displayIndex);
+            displayDiv.find('#displayTags').text(tags[i].join(', '));
+        }
+    }
 };
+
 
 
 function updateSelectedImages() {
@@ -156,18 +167,17 @@ function updateSelectedImages() {
   }
   $('#selectedImageContainer').html(selectedImagesHtml);
 }
-
+/*
 document.addEventListener('DOMContentLoaded', function () {
   const tagList = localStorage.getItem('tagList');
 
   if (tagList) {
     const tags = JSON.parse(tagList);
     const lastTag = tags[tags.length - 1]
-    //const tags = JSON.parse(tagList).join(', '); <--- for multiple tags on one item
     document.getElementById('displayTags').textContent = lastTag;
   }
 });
-
+*/
 $(document).ready(function() {
   $('.edit').on('click', function(e) {
     e.preventDefault(); 

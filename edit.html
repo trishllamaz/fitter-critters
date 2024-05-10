@@ -20,8 +20,7 @@
             <!-- Dropdown for selecting tags -->
             <div id="dropdown-container">
                 <label for="dropdown">Select your Tag:</label>
-                <select id="dropdown" multiple>
-                    <option value="None">None</option>
+                <select id="dropdown" onchange="newTag()" multiple>
                     <option value="Shirt">Shirts</option>
                     <option value="Jacket">Jackets</option>
                     <option value="Pants">Pants</option>
@@ -29,8 +28,10 @@
                     <option value="Neutral">Neutral</option>
                     <option value="Colorful">Colorful</option>
                     <option value="Denim">Denim</option>
+                    <option value="Custom">Custom</option>
                 </select>
             </div>
+            <input type="text" id="customTagInput" style="display: none;">
             <input type="button" value="Save" onclick="saveTags()">
             <input type="button" value="Delete" onclick="deleteImage()">
         </div>
@@ -43,27 +44,55 @@
     window.onload = function() {
         var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
         var imgSrc = storedItem.imageSrc;
-        console.log(imgSrc)
         if (imgSrc) {
             document.getElementById('preview-images').src = imgSrc;
         }
+        console.log(storedItem.tags);
     };
 
+    // Function to save tags for the selected item
     function saveTags() {
-        var selectedTags = [];
-        var selectElement = document.getElementById("dropdown");
-        var tagList = localStorage.getItem("tagList") ? JSON.parse(localStorage.getItem("tagList")) : [];
+    var selectedTags = [];
+    var selectElement = document.getElementById("dropdown");
+    var tagList = JSON.parse(localStorage.getItem("tagList")) || [];
+    var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+    const index = tagList.findIndex(item => JSON.stringify(item) === JSON.stringify(storedItem.tags)); // Find index of stored tags in tagList
 
-        for (var i = 0; i < selectElement.options.length; i++) {
-            var option = selectElement.options[i];
-            if (option.selected) {
-                selectedTags.push(option.value);
-            }
+    for (var i = 0; i < selectElement.options.length; i++) {
+        var option = selectElement.options[i];
+        if (option.selected && option.value !== "Custom") {
+            selectedTags.push(option.value);
         }
+    }
+    var customTagInput = document.getElementById("customTagInput");
+    if (customTagInput.value.trim() !== "") {
+        selectedTags.push(customTagInput.value.trim());
+    }
 
+    if (index !== -1) {
+        tagList[index] = selectedTags; // Update tags at the correct index
+    } else {
         tagList.push(selectedTags);
-        localStorage.setItem("tagList", JSON.stringify(tagList));
-        window.location.href = "closet.html";
+    }
+
+    localStorage.setItem("tagList", JSON.stringify(tagList));
+    storedItem.tags = selectedTags;
+    localStorage.setItem('selectedItem', JSON.stringify(storedItem));
+    console.log(tagList);
+    window.location.href = "closet.html";
+    }
+
+    function newTag() {
+        var selectElement = document.getElementById("dropdown");
+        var customTagInput = document.getElementById("customTagInput");
+
+        var customOptionSelected = Array.from(selectElement.selectedOptions).some(option => option.value === "Custom");
+
+        if (customOptionSelected) {
+            customTagInput.style.display = "inline-block";
+        } else {
+            customTagInput.style.display = "none";
+        }
     }
 
     function handleImageUpload(event) {
@@ -92,11 +121,14 @@
         var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
         var imgSrc = storedItem.imageSrc;
         var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+        var tagList = JSON.parse(localStorage.getItem("tagList")) || [];
         const index = uploadedImages.indexOf(imgSrc);
         if (index !== -1) {
             uploadedImages.splice(index, 1);
+            tagList.splice(index, 1);
         }
         localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+        localStorage.setItem("tagList", JSON.stringify(tagList));
         localStorage.removeItem('selectedItem');
         window.location.href = "closet.html";
     }
