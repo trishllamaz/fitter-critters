@@ -3,18 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-.topnav {
-    overflow: hidden;
-    background-color: #ffb3c6;
-    box-shadow: 0 8px 6px 1px #888888;
-    border: 1px solid rgb(73, 0, 73);
-  }
-
   .saved_lists {
     text-align: center;
   }
-
 
   .saved_lists button {
 

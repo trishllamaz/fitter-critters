@@ -12,8 +12,13 @@
 <body>
   <div class="topnav">
     <a href=index.html> Back Home </a>
-    <a href="closet.html">Back to Closet</a>
+    <a class="active" href=closet.html> Your Closet </a>
   </div>
+  <div id="closetfilter">
+    <button class="btn" onclick="location.href='closet.html'"> Show all</button>
+    <button class="btn active" onclick="location.href='favorite.html'"> Favorite</button>
+  </div>
+
   <div class="saved_lists">
     <h1>Favorite</h1>
     <button type="button">Edit List</button>
@@ -41,6 +46,8 @@ if (selectedOutfits) {
   selectedOutfits.forEach(function(imageSrc) {
     var img = document.createElement("img");
     img.src = imageSrc;
+    img.style.width = "200px"; 
+    img.style.height = "200px";
     container.appendChild(img);
   });
 }
