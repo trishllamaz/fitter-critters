@@ -13,26 +13,62 @@
     <a href=index.html> Back Home </a>
     <a href=social.html> Public Outfits </a>
   </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+      <style>
+        @keyframes rotate {
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        .out-top {
+          animation: rotate 20s linear infinite;
+          transform-origin: 11px 12px;
+        }
+        .in-top {
+          animation: rotate 20s linear infinite;
+          transform-origin: 11px 12px;
+        }
+        .out-bot {
+          animation: rotate 25s linear infinite;
+          transform-origin: 93px 86px;
+        }
+        .in-bot {
+          animation: rotate 25s linear infinite;
+          transform-origin: 94px 94px;
+        }
+      </style>
+    </defs>
+    <ellipse rx="1" ry="1" transform="translate(8 6)" fill="#d2dbed" stroke-width="0"/>
+    <ellipse rx="1" ry="1" transform="translate(94 94)" fill="#d2dbed" stroke-width="0"/>
+    <path fill="#BFD7FF" class="out-top" d="M15.024831,50C39.030915,55.731421,50,19.354179,43.068938,0c-3.932505-10.98106-39.577791-12.524829-49.723801-11.602469-24.21442,2.20131,0,53.638789,21.679694,61.602469"/>
+    <path fill="#9BB1FF" class="in-top"d="M20.174732,30.911742c20.9012,0,.217518-33.221782-13.550942-35.340002-23.82495-3.66538-7.562624,35.340002,13.550942,35.340002"/>
+    <path fill="#B2F7EF" class="out-bot"d="M43.068938,60.986968c18.647947-34.280237,94.478274,12.92527,69.299015,45.261216-22.034035,28.296757-89.825095-11.81522-69.299015-45.261216"/>
+    <path fill="#7BDFF2" class="in-bot"d="M74.422573,80.76241c10.527228-4.19213,49.877306,10.702433,37.94538,24.356358-22.462135,25.70384-51.102286-14.305677-37.94538-24.356358"/>
+  </svg>
   
-  <h1>Instructions<h1>
   <h3>Having trouble with your closet? Below are instructions to help you get started.
   </h3>
-  <div class="paragraph_section">
+  <div class="section1">
     <p>To get started, take pictures of individual items of clothing from your actual closet.
+    Once you have a variety of clothing images, insert photos using the insert button on the home page.
     </p>
-    <p>Once you have a variety of clothing images, insert photos using the insert button on the home page.
-    </p>
-    <p>After this, you will be able to see your uploaded images.</p>
-    <p>You can tag clothing items with information describing the clothing. Shirt? Pants? Linen? Denim? There are premade tags that you can select when you uploaded the images, and you will be able to click and edit these whenever you want.
-    </p>
-    <p>Once you see your uploaded images, you will be able to select certain items to build outfits using check boxes on the page. Click to save these items. Above your closet are categories of clothing. Click on each category to see where your clothing items are.
-    </p>
-    <p>If you want to search your clothing items to find clothing that fits your parameters, there is a search bar in the upper right of the website. Search up tags to find corresponding clothing!
-    </p>
-    <p>Lastly, you can post your outfits online using the post page. Press the post button to upload your outfit. Check out other outfits for inspiration!
-    </p> 
-    <p>Enjoy your virtual closet!</p>
   </div>
+
+  <div class="section2">
+  <p>After this, you will be able to see your uploaded images. You can tag clothing items with information describing the clothing. Shirt? Pants? Linen? Denim? There are premade tags that you can select when you uploaded the images, and you will be able to click and edit these whenever you want.
+  <p>Once you see your uploaded images, you will be able to select certain items to build outfits using check boxes on the page. Click to save these items. Above your closet are categories of clothing. Click on each category to see where your clothing items are.
+  </p>
+</div>
+
+<div class="section3">
+<p>If you want to search your clothing items to find clothing that fits your parameters, there is a search bar in the upper right of the website. Search up tags to find corresponding clothing!
+</p>
+<p>Lastly, you can post your outfits online using the post page. Press the post button to upload your outfit. Check out other outfits for inspiration!
+</p> 
+<p>Enjoy your virtual closet!</p>
+</div>
   </body>
   </html>
   
