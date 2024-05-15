@@ -25,11 +25,11 @@ Any computer, laptop, or phone works.
 
 There is no installation required.
 
-** 7. Explanations of error messages and troubleshooting guides:**
+**7. Explanations of error messages and troubleshooting guides:**
 
  When there are no images in the closet page, the system will display "No Images to display. Please press the "Upload Clothes" button to continue creating your online closet."
  
-** 8. Information to contact the developer of the system if an undocumented question arises**
+**8. Information to contact the developer of the system if an undocumented question arises**
  For questions, the user may contact any of the developers:
 
  Karen Wongso kw3266@drexel.edu
