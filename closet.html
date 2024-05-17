@@ -46,203 +46,148 @@
     </div>
     <div class="closet-wrapper">
       <div class="leftContent">
-        <div class="left">
-          <div class="display product">
-            <input type="checkbox" class="checkbox" data-img-src="">
-            <div style = "float:right;">
-              <a href="#" class = "edit">.</a>
-            </div>
-            <img src="" width="200px" height="160px" style="margin-left: 10px">
-            <div>
-              <p> Tags: <span id="displayTags" style="display: inline;"> </span> </p>
-            </div>
-          </div>
-        </div>
-        <div class="center">
-          <div class="display product">
-            <input type="checkbox" class="checkbox" data-img-src="">
-            <div style = "float:right;">
-              <a href="#" class = "edit">.</a>
-            </div>
-            <img src="" width="200px" height="160px" style="margin-left: 10px">
-            <p> Tags: <span id="displayTags" style="display: inline;"> </span> </p>
-          </div>
-        </div>
-        <div class="right">
-          <div class="display product">
-            <input type="checkbox" class="checkbox" data-img-src="">
-            <div style = "float:right;">
-              <a href="#" class = "edit">.</a>
-            </div>
-            <img src="" width="200px" height="160px" style="margin-left: 10px">
-            <p> Tags: <span id="displayTags" style="display: inline;"> </span> </p>
-          </div>
+        <div class="images-grid">
+          <!-- The display boxes will be dynamically added here -->
         </div>
       </div>
       <div class="rightContent">
         <p>Your Selected Outfit</p>
         <div id="selectedImageContainer"></div>
-        <div class = 'upload-btn' style="text-align: center;" id = "selectedImages">
-        <a style="text-decoration:none;" href=favorite.html> Save Outfit</a>
-        
+        <div class="upload-btn" style="text-align: center;" id="selectedImages">
+          <a style="text-decoration:none;" href=favorite.html> Save Outfit</a>
         </div>
       </div>
-      
     </div>
     <footer class="upload-btn" style="text-align: center;">
       <a style="text-decoration:none;" href=preview.html> Upload Clothes</a>
     </footer>
   </div>
 </div>
-<!---
-<div class="wrapper">
-  <div class="upload-container">
-    <div class="upload-img" id="image-gallery"></div>
-  </div>
-</div>
--->
+
+
 <script>
-// Track selected images
-var selectedImages = [];
+  var selectedImages = [];
 
-$('.checkbox').change(function () {
-  var imgSrc = $(this).siblings('img').attr('src');
-  if ($(this).is(':checked')) {
-    selectedImages.push(imgSrc);
-  } else {
-    var index = selectedImages.indexOf(imgSrc);
-    if (index !== -1) {
-      selectedImages.splice(index, 1);
+  $(document).on('change', '.checkbox', function() {
+    var imgSrc = $(this).siblings('img').attr('src');
+    var checkbox = $(this);
+    if (checkbox.is(':checked')) {
+      selectedImages.push(imgSrc);
+    } else {
+      var index = selectedImages.indexOf(imgSrc);
+      if (index !== -1) {
+        selectedImages.splice(index, 1);
+      }
     }
-  }
-  if (selectedImages.length > 0) {
-    $('#selectedImages').show();
-  } else {
-    $('#selectedImages').hide();
-  }
-  updateSelectedImages();
-});
+    if (selectedImages.length > 0) {
+      $('#selectedImages').show();
+    } else {
+      $('#selectedImages').hide();
+    }
+    updateSelectedImages();
+  });
 
-/// Window onload
-window.onload = function() {
+  window.onload = function() {
     var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
     const tagList = localStorage.getItem('tagList');
     console.log(tagList);
 
-    // Hide all display boxes initially
     $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
 
-    // Array of images keeps updating. Author: Patricia Tran
     if (uploadedImages.length > 0) {
-        for (var i = 0; i < uploadedImages.length; i++) {
-            var displayIndex = i % 3;
-            var displayDiv = $('.leftContent .display').eq(displayIndex);
-            var imgElement = displayDiv.find("img");
-            imgElement.attr("src", uploadedImages[i]);
-            imgElement.attr("data-img-src", uploadedImages[i]);
-            displayDiv.show();
-        }
+      for (var i = 0; i < uploadedImages.length; i++) {
+        var displayDiv = $(`<div class="display product">`);
+        displayDiv.append(`<input type="checkbox" class="checkbox checkbox-container" data-img-src="">
+                           <div style="float: right;">
+                             <a href="edit.html" class="edit">.</a>
+                           </div>
+                           <img src="${uploadedImages[i]}" width="100%" height="auto">
+                           <p> Tags: <span id="displayTags" style="display: inline;"></span> </p>
+                          </div>`);
+        $('.images-grid').append(displayDiv);
+        displayDiv.show();
+      }
 
-        $('.rightContent').show();
-        $('#hiddenMessage').hide();
+      $('.rightContent').show();
+      $('#hiddenMessage').hide();
     } else {
-        $('#hiddenMessage').show();
+      $('#hiddenMessage').show();
     }
+
     if (tagList) {
-        const tags = JSON.parse(tagList) || [];
-        for (var i = 0; i < tags.length; i++) {
-            var displayIndex = i % 3;
-            var displayDiv = $('.leftContent .display').eq(displayIndex);
-            displayDiv.find('#displayTags').text(tags[i].join(', '));
-        }
-    }
-};
-
-
-
-function updateSelectedImages() {
-  var selectedImagesHtml = '';
-  for (var i = 0; i < selectedImages.length; i++) {
-    selectedImagesHtml += '<img src="' + selectedImages[i] + '" style="margin-right: 10px;" width="200px" height="160px">';
-  }
-  $('#selectedImageContainer').html(selectedImagesHtml);
-}
-/*
-document.addEventListener('DOMContentLoaded', function () {
-  const tagList = localStorage.getItem('tagList');
-
-  if (tagList) {
-    const tags = JSON.parse(tagList);
-    const lastTag = tags[tags.length - 1]
-    document.getElementById('displayTags').textContent = lastTag;
-  }
-});
-*/
-$(document).ready(function() {
-  $('.edit').on('click', function(e) {
-    e.preventDefault(); 
-    editItem(this); 
-  });
-});
-
-// Function gathers data from the page and transfers it to the edit page
-// Author: Kylie Sodano
-function editItem(clickedElement) {
-  var imgSrc = $(clickedElement).closest('.product').find('img').attr('src');
-  console.log(imgSrc)
-  var tags = $(clickedElement).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
-            
-  localStorage.setItem('selectedItem', JSON.stringify({ imageSrc: imgSrc, tags: tags }));
-  window.location.href = "edit.html";
-}
-
-const search = () => {
-  const searchbox = document.getElementById("txtSearch").value.toUpperCase();
-  const product = document.querySelectorAll(".product");
-  let anyMatch = false;
-
-  for (var i = 0; i < product.length; i++) {
-    let match = product[i].getElementsByTagName("p")[0];
-
-    if (match) {
-      let textValue = match.textContent || match.innerHTML;
-      
-      if (textValue.toUpperCase().indexOf(searchbox) > -1) {
-        product[i].style.display = "";
-        anyMatch = true;
-      } else {
-        product[i].style.display = "none";
+      const tags = JSON.parse(tagList) || [];
+      for (var i = 0; i < tags.length; i++) {
+        $('.images-grid .display').eq(i).find('#displayTags').text(tags[i].join(', '));
       }
     }
+  };
+
+  function updateSelectedImages() {
+    var selectedImagesHtml = '';
+    for (var i = 0; i < selectedImages.length; i++) {
+      selectedImagesHtml += '<img src="' + selectedImages[i] + '" style="margin-right: 10px;" width="200px" height="160px">';
+    }
+    $('#selectedImageContainer').html(selectedImagesHtml);
   }
 
-  if (!anyMatch) {
-    $('#noSearchResults').show();
-    $('.rightContent').hide();
-  } else {
-    $('#noSearchResults').hide();
-    $('.rightContent').show();
+  $(document).ready(function() {
+    $('.edit').on('click', function(e) {
+      e.preventDefault(); 
+      editItem(this); 
+    });
+  });
+
+  function editItem(clickedElement) {
+    var imgSrc = $(clickedElement).closest('.product').find('img').attr('src');
+    console.log(imgSrc)
+    var tags = $(clickedElement).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
+              
+    localStorage.setItem('selectedItem', JSON.stringify({ imageSrc: imgSrc, tags: tags }));
+    window.location.href = "edit.html";
   }
-};
 
+  const search = () => {
+    const searchbox = document.getElementById("txtSearch").value.toUpperCase();
+    const product = document.querySelectorAll(".product");
+    let anyMatch = false;
 
-document.getElementById("frmSearch").addEventListener("input", (event) => {
-  event.preventDefault();
-  search();
-});
+    for (var i = 0; i < product.length; i++) {
+      let match = product[i].getElementsByTagName("p")[0];
 
+      if (match) {
+        let textValue = match.textContent || match.innerHTML;
+        
+        if (textValue.toUpperCase().indexOf(searchbox) > -1) {
+          product[i].style.display = "";
+          anyMatch = true;
+        } else {
+          product[i].style.display = "none";
+        }
+      }
+    }
 
-// Function to save selected outfits to favorites - Author: Patricia Tran
-function saveOutfits() {
-  if (selectedImages.length > 0) {
-    localStorage.setItem("selectedOutfits", JSON.stringify(selectedImages));
-    window.location.href = "favorite.html";
+    if (!anyMatch) {
+      $('#noSearchResults').show();
+      $('.rightContent').hide();
+    } else {
+      $('#noSearchResults').hide();
+      $('.rightContent').show();
+    }
+  };
+
+  document.getElementById("frmSearch").addEventListener("input", (event) => {
+    event.preventDefault();
+    search();
+  });
+
+  function saveOutfits() {
+    if (selectedImages.length > 0) {
+      localStorage.setItem("selectedOutfits", JSON.stringify(selectedImages));
+      window.location.href = "favorite.html";
+    }
   }
-}
 
-// Event listener for "Save Outfit"
-document.getElementById("selectedImages").addEventListener("click", saveOutfits);
-
+  document.getElementById("selectedImages").addEventListener("click", saveOutfits);
 
 </script>
 </body>

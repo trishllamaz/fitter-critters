@@ -428,7 +428,7 @@ a {
     display: block;
 }
 .checkbox {
-    float: left;
+    /*float: left;*/
     margin: 5px;
 }
 
@@ -449,22 +449,25 @@ a {
     width: 33%;
 }
 
-/* Left side of screen */
+/* Update the width properties to allow for dynamic resizing */
 .leftContent {
     overflow-y: auto;
-    display: flex;
+    width: 70%;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 70%;
     max-height: 100vh;
+    flex: 2;
 }
-/* Right side of screen */
+
 .rightContent {
     margin-left: 10px;
     text-align: center;
     height: 100vh;
+    width: 30%; /* Default width */
 }
+
+
 footer {
     text-align: 10px;
     background-color: white;
@@ -760,4 +763,57 @@ svg {
 .search-input::placeholder,
 .search-icon {
     color: rgba(0, 0, 0, 0.5);
+}
+.images-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+}
+  
+/* Ensure display boxes resize smoothly */
+.display {
+    width: 250px;  /* Adjust width as needed */
+    height: 250px; /* Adjust height as needed */
+    padding: 10px;
+    border: 5px solid #FFB3C6;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.display img {
+    width: 100%;
+    height: auto;
+}
+  
+.display.product img {
+    width: 200px;
+    height: 160px;
+}
+  
+.left, .center, .right {
+    flex: 1;
+}
+  
+.images-grid::after {
+    content: "";
+    flex: auto;
+}
+  
+.rightContent {
+    margin-left: 10px;
+    text-align: center;
+    height: 100vh;
+    flex: 1;
+}
+.checkbox-container, .edit-container {
+    margin-top: auto; /* Pushes the containers to the bottom */
+    display: inline-block;
+}
+
+.edit-container {
+    margin-left: auto; /* Pushes the edit dot to the right */
+    display: inline-block;
 }
