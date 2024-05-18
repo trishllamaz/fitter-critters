@@ -1,65 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'); 
-
-
-
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    text-align: center;
-    
 }
 
 body {
     background-color: #ffdaee9d;
-    justify-content: center; /* Center horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-h3{
+h3 {
     padding: 30px;
-    font-size: 30px;
-    color:#7e6371;
+    font-size: 20px;
+    color: #7e6371;
     font-weight: bold;
+    background-color: #f0f6ff;
+    max-height: 10px;
+    width: 100%; 
+    border-radius: 12px;
+    box-shadow: #fb6f92 0px 8px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
 
+}
 
+.topnav {
+    width: 100%;
+    background-color: #ffb3c6;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex-shrink: 0; 
+}
 
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%; 
 }
 
 .section1,
 .section2,
 .section3 {
-    padding: 0 50px; /* Removed the duplicate padding */
-    margin: 20px auto; /* Center horizontally */
-    text-align: center;
-    align-items: center; /* Removed the duplicate align-items */
-    background-color: #fff;
-    min-width: 200px;
-    min-height: 200px;
+    background-color: #fdfeff;
+    width: 100%; 
     max-width: 500px;
-    max-height: 500px;
+    min-height: 400px;
     border-radius: 12px;
     box-shadow: #fb6f92 0px 8px 24px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    text-align: center; /* Removed the duplicate text-align */
+    justify-content: center; 
+    align-items: center; 
     padding: 60px;
     margin: 20px;
 }
 
-.topnav {
-    overflow: hidden;
-    background-color: #ffb3c6;
-  }
-
-  /* Animation background */
+/* Animation background */
 svg {
     position: fixed;
-    top: 50;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     z-index: -1;
 }
-
