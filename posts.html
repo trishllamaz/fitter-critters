@@ -29,27 +29,26 @@
     <div id="imageGallery"></div>
 
     <script>
-        // Fetches the image data from the server
-        fetch('/api/images')
+        // Fetches the image data from Firebase Storage
+        fetch('https://storage.googleapis.com/<your-bucket-name>/<file-path>') // Update with your Firebase Storage URL
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
+            // Assuming response is a URL to the image
+            return response.text();
         })
-        .then(images => {
+        .then(imageUrl => {
             const gallery = document.getElementById('imageGallery');
-            images.forEach(image => {
-                const imgElement = document.createElement('img');
-                imgElement.src = image.path; // Ensure that the image path is correctly provided by your API
-                imgElement.alt = 'Uploaded Outfit';
-                gallery.appendChild(imgElement);
-            });
+            const imgElement = document.createElement('img');
+            imgElement.src = imageUrl; // Set the src attribute to the URL of the image
+            imgElement.alt = 'Uploaded Outfit';
+            gallery.appendChild(imgElement);
         })
         .catch(error => {
-            console.error('Error loading images:', error);
+            console.error('Error loading image:', error);
             const gallery = document.getElementById('imageGallery');
-            gallery.innerText = 'Failed to load images.';
+            gallery.innerText = 'Failed to load image.';
         });
     </script>
 </body>
