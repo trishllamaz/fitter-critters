@@ -453,7 +453,9 @@ a {
 .leftContent {
     overflow-y: auto;
     width: 70%;
+    display: flex;
     flex-wrap: wrap;
+    gap: 20px;
     justify-content: flex-start;
     align-items: flex-start;
     max-height: 100vh;
