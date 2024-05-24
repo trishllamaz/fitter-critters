@@ -27,9 +27,12 @@
   </div>
 
   <!-- Image Slider for outfits -->
-  <div class="saved-lists-container">
-    <h3>Your favorite Outfits</h3>
+
+  <div class="favDisplay" style="align-items: center;">
+    <div class="saved-lists-container"></div>
   </div>
+
+  
 
   
 <script src="favorite.js"></script>
@@ -39,18 +42,31 @@
 // Author: Patricia Tran
 // Retrieve selected images from local storage
 var selectedOutfits = JSON.parse(localStorage.getItem("selectedOutfits"));
-
+console.log(selectedOutfits)
 // Display
 if (selectedOutfits) {
   var container = document.querySelector(".saved-lists-container");
-  selectedOutfits.forEach(function(imageSrc) {
-    var img = document.createElement("img");
-    img.src = imageSrc;
-    img.style.width = "200px"; 
-    img.style.height = "200px";
-    container.appendChild(img);
-  });
+  if (container) {
+    container.style.display = "flex";
+    container.style.flexDirection = "column";
+
+    selectedOutfits.forEach(function(imageSrc) {
+      var img = new Image();
+      img.src = imageSrc;
+      img.style.width = "200px"; 
+      img.style.height = "200px";
+      container.appendChild(img);
+    });
+  } else {
+    console.error("Container not found");
+  }
+} else {
+  console.error("No selected outfits found");
 }
+
+
+
+
 
 
 

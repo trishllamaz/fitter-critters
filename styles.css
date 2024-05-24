@@ -853,3 +853,14 @@ margin: 20px;
     margin-left: auto; /* Pushes the edit dot to the right */
     display: inline-block;
 }
+
+.favDisplay {
+    width: fit-content; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 10px;
+    border: 5px solid #FFB3C6;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}

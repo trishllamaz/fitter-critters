@@ -183,11 +183,13 @@
   function saveOutfits() {
     if (selectedImages.length > 0) {
       localStorage.setItem("selectedOutfits", JSON.stringify(selectedImages));
+      console.log(selectedImages)
       window.location.href = "favorite.html";
     }
   }
 
   document.getElementById("selectedImages").addEventListener("click", saveOutfits);
+
 
 </script>
 </body>
