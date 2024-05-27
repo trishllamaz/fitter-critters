@@ -1,117 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <title>Upload Image Test</title>
-
-    <script type="module">
-        /* Here The Script For The Login Page Database */
-    
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-storage.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyBB4ll9coIGqle-zOiQEiE1rPwPq95NDuE",
-            authDomain: "fitter-critters.firebaseapp.com",
-            projectId: "fitter-critters",
-            storageBucket: "fitter-critters.appspot.com",
-            messagingSenderId: "517864958606",
-            appId: "1:517864958606:web:6604e725fb95fb5baa77df",
-            measurementId: "G-T0K2M2RDJ7"
-        };
-    
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app)
-        const storage = getStorage()
-        console.log(app)
-    
-        // Submit Button
-        function uploadImage() {
-            const ref = app.storage().ref()
-            const file = document.querySelector("#photo").files[0]
-            const name = new Date() + '-' + file.name
-            const metadata = {
-                contentType: file.type
-            }
-            const task = ref.child(name).put(file, metadata)
-    
-            task
-            .then(snapshot => snapshot.ref.getDownloadURL())
-            .then(url => {
-                console.log(url)
-                alert("Image Upload Successful")
-                const image = document.createElement('#image')
-                image.src = url
-            })
-        }
-        // Create the file metadata
-        /** @type {any} */
-        const metadata = {
-            contentType: 'image/jpeg'
-        };
-
-        // Upload file and metadata to the object 'images/mountains.jpg'
-        const storageRef = ref(storage, 'images/' + file.name);
-        const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on('state_changed',
-            (snapshot) => {
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log('Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                    case 'paused':
-                        console.log('Upload is paused');
-                        break;
-                    case 'running':
-                        console.log('Upload is running');
-                        break;
-                }
-            },
-            (error) => {
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
-                switch (error.code) {
-                    case 'storage/unauthorized':
-                        // User doesn't have permission to access the object
-                        break;
-                    case 'storage/canceled':
-                        // User canceled the upload
-                        break;
-
-                    // ...
-
-                    case 'storage/unknown':
-                        // Unknown error occurred, inspect error.serverResponse
-                        break;
-                }
-            },
-            () => {
-                // Upload completed successfully, now we can get the download URL
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log('File available at', downloadURL);
-                });
-            }
-        );
-    </script>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
+    <div class="topnav">
+        <a href=help.html> Need Help? </a>
+        <a class="active" href=closet.html> Your Closet </a>
+        <a href=index.html> Back Home </a>
+        <a href=social.html> Public Outfits </a>
+        <!-- This is the search bar updated -->
+        <form id="frmSearch" class="search2" method="get">
+            <div class="search">
+                <span class="search-icon material-symbols-outlined">search</span>
+                <input class="search2 search-input" id="txtSearch" type="text search" placeholder="Search"
+                    name="search_bar" size="30" maxlength="255" value=""
+                    style="left: 300px; top: 153px; width: 293px; height: 26px;" />
+            </div>
+        </form>
+    </div>
+
+    <div id="closetfilter">
+        <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+        <button class="btn" onclick="location.href='favorite.html'"> Favorite</button>
+    </div>
+
+    <div class="filter-container">
+        <div class="filterDiv shirts colorful">image</div>
+        <div class="filterDiv shirts neutral">image</div>
+        <div class="filterDiv pants denim">image</div>
+    </div>
+
+    <div class="container" id="product-list">
+        <div class="content">
+            <div id="hiddenMessage" style="text-align: center;">
+                <p style="margin-top: 10%;">No images to display. </p>
+                <p> Please press the "Upload Clothes" button to continue creating your online closet</p>
+            </div>
+            <div id="noSearchResults" style="text-align: center;">
+                <p style="margin-top: 10%;">No images to display. </p>
+                <p> No clothing found matching search term... please try again</p>
+            </div>
+            <div class="closet-wrapper">
+                <div class="leftContent">
+                    <div class="images-grid">
+                        <!-- The display boxes will be dynamically added here -->
+                    </div>
+                </div>
+                <div class="rightContent">
+                    <p>Your Selected Outfit</p>
+                    <div id="selectedImageContainer"></div>
+                    <div class="upload-btn" style="text-align: center;" id="selectedImages">
+                        <a style="text-decoration:none;" href=favorite.html> Save Outfit</a>
+                    </div>
+                </div>
+            </div>
+            <footer class="upload-btn" style="text-align: center;">
+                <a style="text-decoration:none;" href=preview.html> Upload Clothes</a>
+            </footer>
+        </div>
+    </div>
+
     <div class="wrapper">
         <form class="upload-wrapper">
             <div class="upload-container">
                 <div class="upload-img">
-                    <img id="preview-image" src="#" alt="">
+                    <img id="preview-images" src="#" alt="">
                 </div>
                 <p class="upload-text">Please choose an image to upload.</p>
 
@@ -120,17 +80,250 @@
 
                 <!-- File input button -->
                 <label for="image-upload" class="upload-btn">Choose Image</label>
-                <button class="upload-btn" onclick="uploadImage()">Submit</button>
+
+                <!-- Dropdown for selecting tags -->
+                <div id="dropdown-container">
+                    <label for="dropdown">Select your Tag:</label>
+                    <select id="dropdown" onchange="newTag()" multiple>
+                        <option value="Shirt">Shirts</option>
+                        <option value="Jacket">Jackets</option>
+                        <option value="Pants">Pants</option>
+                        <option value="Shoes">Shoes</option>
+                        <option value="Neutral">Neutral</option>
+                        <option value="Colorful">Colorful</option>
+                        <option value="Denim">Denim</option>
+                        <option value="Custom">Custom</option>
+                    </select>
+                </div>
+                <input type="text" id="customTagInput" style="display: none;">
+                <input type="button" value="Save" onclick="saveTags()">
+                <input type="button" value="Delete" onclick="deleteImage()">
             </div>
         </form>
     </div>
+
+
+    <script>
+        // Author: Kylie Sodano
+        // These functions serve to allow users to delete or edit their closet.
+        // Delete the images removes them from local storage and the closet page
+        window.onload = function () {
+            var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+            var imgSrc = storedItem.imageSrc;
+            if (imgSrc) {
+                document.getElementById('preview-images').src = imgSrc;
+            }
+            console.log(storedItem.tags);
+        };
+
+        // Function to save tags for the selected item
+        function saveTags() {
+            var selectedTags = [];
+            var selectElement = document.getElementById("dropdown");
+            var tagList = JSON.parse(localStorage.getItem("tagList")) || [];
+            var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+            const index = tagList.findIndex(item => JSON.stringify(item) === JSON.stringify(storedItem.tags)); // Find index of stored tags in tagList
+
+            for (var i = 0; i < selectElement.options.length; i++) {
+                var option = selectElement.options[i];
+                if (option.selected && option.value !== "Custom") {
+                    selectedTags.push(option.value);
+                }
+            }
+            var customTagInput = document.getElementById("customTagInput");
+            if (customTagInput.value.trim() !== "") {
+                selectedTags.push(customTagInput.value.trim());
+            }
+
+            if (index !== -1) {
+                tagList[index] = selectedTags; // Update tags at the correct index
+            } else {
+                tagList.push(selectedTags);
+            }
+
+            localStorage.setItem("tagList", JSON.stringify(tagList));
+            storedItem.tags = selectedTags;
+            localStorage.setItem('selectedItem', JSON.stringify(storedItem));
+            console.log(tagList);
+            window.location.href = "closet.html";
+        }
+
+        function newTag() {
+            var selectElement = document.getElementById("dropdown");
+            var customTagInput = document.getElementById("customTagInput");
+
+            var customOptionSelected = Array.from(selectElement.selectedOptions).some(option => option.value === "Custom");
+
+            if (customOptionSelected) {
+                customTagInput.style.display = "inline-block";
+            } else {
+                customTagInput.style.display = "none";
+            }
+        }
+
+        function handleImageUpload(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                const imageData = e.target.result;
+                const uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+                var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+                const index = uploadedImages.indexOf(storedItem.imageSrc);
+                if (index !== -1) {
+                    uploadedImages[index] = imageData;
+                } else {
+                    uploadedImages.push(imageData);
+                }
+                localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+                storedItem.imageSrc = imageData;
+                localStorage.setItem('selectedItem', JSON.stringify(storedItem));
+                document.getElementById('preview-images').src = imageData;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function deleteImage() {
+            var storedItem = JSON.parse(localStorage.getItem('selectedItem'));
+            var imgSrc = storedItem.imageSrc;
+            var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+            var tagList = JSON.parse(localStorage.getItem("tagList")) || [];
+            const index = uploadedImages.indexOf(imgSrc);
+            if (index !== -1) {
+                uploadedImages.splice(index, 1);
+                tagList.splice(index, 1);
+            }
+            localStorage.setItem("uploadedImages", JSON.stringify(uploadedImages));
+            localStorage.setItem("tagList", JSON.stringify(tagList));
+            localStorage.removeItem('selectedItem');
+            window.location.href = "closet.html";
+        }
+
+        document.getElementById('image-upload').addEventListener('change', handleImageUpload);
+        var selectedImages = [];
+
+        $(document).on('change', '.checkbox', function () {
+            var imgSrc = $(this).siblings('img').attr('src');
+            var checkbox = $(this);
+            if (checkbox.is(':checked')) {
+                selectedImages.push(imgSrc);
+            } else {
+                var index = selectedImages.indexOf(imgSrc);
+                if (index !== -1) {
+                    selectedImages.splice(index, 1);
+                }
+            }
+            if (selectedImages.length > 0) {
+                $('#selectedImages').show();
+            } else {
+                $('#selectedImages').hide();
+            }
+            updateSelectedImages();
+        });
+
+        window.onload = function () {
+            var uploadedImages = JSON.parse(localStorage.getItem("uploadedImages")) || [];
+            const tagList = localStorage.getItem('tagList');
+            console.log(tagList);
+
+            $('.leftContent .display, .rightContent, #noSearchResults, #selectedImages').hide();
+
+            if (uploadedImages.length > 0) {
+                for (var i = 0; i < uploadedImages.length; i++) {
+                    var displayDiv = $(`<div class="display product">`);
+                    displayDiv.append(`<input type="checkbox" class="checkbox checkbox-container" data-img-src="">
+                           <div style="float: right;">
+                             <a href="edit.html" class="edit">.</a>
+                           </div>
+                           <img src="${uploadedImages[i]}" width="100%" height="auto">
+                           <p> Tags: <span id="displayTags" style="display: inline;"></span> </p>
+                          </div>`);
+                    $('.images-grid').append(displayDiv);
+                    displayDiv.show();
+                }
+
+                $('.rightContent').show();
+                $('#hiddenMessage').hide();
+            } else {
+                $('#hiddenMessage').show();
+            }
+
+            if (tagList) {
+                const tags = JSON.parse(tagList) || [];
+                for (var i = 0; i < tags.length; i++) {
+                    $('.images-grid .display').eq(i).find('#displayTags').text(tags[i].join(', '));
+                }
+            }
+        };
+
+        function updateSelectedImages() {
+            var selectedImagesHtml = '';
+            for (var i = 0; i < selectedImages.length; i++) {
+                selectedImagesHtml += '<img src="' + selectedImages[i] + '" style="margin-right: 10px;" width="200px" height="160px">';
+            }
+            $('#selectedImageContainer').html(selectedImagesHtml);
+        }
+
+        $(document).ready(function () {
+            $('.edit').on('click', function (e) {
+                e.preventDefault();
+                editItem(this);
+            });
+        });
+
+        function editItem(clickedElement) {
+            var imgSrc = $(clickedElement).closest('.product').find('img').attr('src');
+            console.log(imgSrc)
+            var tags = $(clickedElement).closest('.product').find('#displayTags').text().split(',').map(tag => tag.trim());
+
+            localStorage.setItem('selectedItem', JSON.stringify({ imageSrc: imgSrc, tags: tags }));
+            window.location.href = "edit.html";
+        }
+
+        const search = () => {
+            const searchbox = document.getElementById("txtSearch").value.toUpperCase();
+            const product = document.querySelectorAll(".product");
+            let anyMatch = false;
+
+            for (var i = 0; i < product.length; i++) {
+                let match = product[i].getElementsByTagName("p")[0];
+
+                if (match) {
+                    let textValue = match.textContent || match.innerHTML;
+
+                    if (textValue.toUpperCase().indexOf(searchbox) > -1) {
+                        product[i].style.display = "";
+                        anyMatch = true;
+                    } else {
+                        product[i].style.display = "none";
+                    }
+                }
+            }
+
+            if (!anyMatch) {
+                $('#noSearchResults').show();
+                $('.rightContent').hide();
+            } else {
+                $('#noSearchResults').hide();
+                $('.rightContent').show();
+            }
+        };
+
+        document.getElementById("frmSearch").addEventListener("input", (event) => {
+            event.preventDefault();
+            search();
+        });
+
+        function saveOutfits() {
+            if (selectedImages.length > 0) {
+                localStorage.setItem("selectedOutfits", JSON.stringify(selectedImages));
+                window.location.href = "favorite.html";
+            }
+        }
+
+        document.getElementById("selectedImages").addEventListener("click", saveOutfits);
+
+    </script>
 </body>
 
-<script>
-    window.onload = function() {
-        var imageData = localStorage.getItem('uploadedImage');
-        if (imageData) {
-            document.getElementById('preview-image').src = imageData;
-        }
-    };
-</script>
+</html>
