@@ -11,7 +11,7 @@
             <div class="upload-img">
                 <img id="preview-image" src="#" alt="">
             </div>
-            <p class="upload-text">Please choose an image to upload.</p>
+            <p class="upload-text" style="padding-bottom: 10px;">Please choose an image to upload.</p>
             
             <!-- File input field -->
             <input type="file" class="visually-hidden" id="image-upload" accept="image/*">
@@ -20,9 +20,9 @@
             <label for="image-upload" class="upload-btn">Choose Image</label>
 
             <!-- Dropdown for selecting tags -->
-            <div id="dropdown-container">
+            <div id="dropdown-container" style="padding-top: 10px;">
                 <label for="dropdown">Select your Tag:</label>
-                <select id="dropdown" onchange="newTag()" multiple>
+                <select id="dropdown" onchange="newTag()" multiple style="height: 60px;">
                     <option value="Shirt">Shirts</option>
                     <option value="Jacket">Jackets</option>
                     <option value="Pants">Pants</option>
@@ -34,7 +34,7 @@
                 </select>
             </div>
             <input type="text" id="customTagInput" style="display: none;">
-            <input type="button" value="Submit" onclick="saveTags()">
+            <input type="button" value="Submit" onclick="saveTags()" class="save-btn">
         </div>
     </form>
 </div>
